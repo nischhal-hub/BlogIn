@@ -31,9 +31,7 @@ export const sidebarLinks: SidebarLinks = [
         page:'page-urls',
         links : [
             {label:"Home",icon:<TiHome />,url:'/' },
-            {label:"Community",icon:<IoPeopleOutline/>,url:'/community' },
             {label:"Explore",icon:<MdOutlineExplore/>,url:'/explore' },
-            {label:"My store",icon:<MdOutlineStorefront/>,url:'/mystore' },
             {label:"Library",icon:<MdOutlineLibraryMusic/>,url:'/library' },
         ]
     },
