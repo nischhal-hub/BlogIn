@@ -5,6 +5,7 @@ import SingleBlog from './components/SingleBlog'
 import Profile from './components/Profile'
 import SharedLayout from './components/SharedLayout'
 import { Routes,Route,Navigate } from 'react-router-dom'
+
 function App() {
 
 

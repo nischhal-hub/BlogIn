@@ -3,15 +3,13 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { CiSearch } from "react-icons/ci";
 import Card from './Card';
 const Home = () => {
+    
     return (
         <>
             <div className='flex w-full'>
                 <div className='w-1/6'></div>
                 <div className='w-5/6'>
                     <div className='w-[90%] ml-2 '>
-                        <div className='mt-5'>
-                            <button className='flex items-center font-inter font-normal text-base text-textLight'><IoIosArrowBack className='mr-4' />Back</button>
-                        </div>
                         <div className="filter-section flex mt-10 items-center justify-between">
                             <div className="dropdown font-urbanist ">
                                 <button className='px-4 py-2 mr-2 border-[1px] text-textLight border-textLight rounded-[40px]'>All types</button>
