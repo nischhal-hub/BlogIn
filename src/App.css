@@ -1,0 +1,12 @@
+#root {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.glass{
+height: 60%;
+background: rgba(0, 0, 0, 0.35);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+}
