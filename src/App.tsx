@@ -15,6 +15,7 @@ function App() {
       <Route path='/' element={<SharedLayout />}>
           <Route path='/' element={<Home/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          <Route path='/blogs/:id' element={<SingleBlog/>}/>
       </Route>
     </Routes>
     {/* <Navbar />

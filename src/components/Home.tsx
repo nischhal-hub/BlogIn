@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { IoIosArrowBack } from 'react-icons/io';
 import { CiSearch } from "react-icons/ci";
 import Card from './Card';
-const Home = () => {
-    
+import { useQuery } from '@tanstack/react-query';
+import { fetchBlog } from '../api';
+import { Link } from 'react-router-dom';
+const Home:FC = () => {
+    const {data, isLoading} = useQuery({
+        queryFn: ()=>fetchBlog(),
+        queryKey : ['blogs']
+    })
+    console.log(data)
+    if(isLoading)return(
+        <div className='flex justify-center items-center w-full h-screen'>
+        <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
+        </div>
+    )  
+    else
     return (
-        <>
-            <div className='flex w-full'>
+        <> 
+            <div className='flex w-full h-auto'>
                 <div className='w-1/6'></div>
                 <div className='w-5/6'>
                     <div className='w-[90%] ml-2 '>
@@ -18,8 +31,7 @@ const Home = () => {
                             <CiSearch className='text-3xl text-textLight'/>
                         </div>
                         <div className="card-section mt-8 grid grid-cols-[repeat(auto-fill,minmax(288px,1fr))]">
-                            {Array.from({length:11}).map((_,i)=>(<Card key={i}/>))}
-                            <Card />
+                            {data.data.map((item: { title: string; id: string; image: string; author: { name: string; }; createdAt: string; },i:number)=>(<Link to={`blogs/${item.id}`}><Card key={i} title={item.title} id={item.id} image={item.image} authorName={item.author.name} createdAt={item.createdAt} /> </Link> ))}
                         </div>
                     </div>
                 </div>
