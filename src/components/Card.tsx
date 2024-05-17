@@ -10,7 +10,7 @@ type ItemProps = {
 }
 const Card: FC<ItemProps> = (prop) => {
   return (
-    <div className='w-72 relative rounded-[12px] mb-3'>
+    <div className='w-72 relative rounded-[12px] mb-2'>
       <div className="price absolute top-3 right-5">
         <p className='bg-textLight rounded-[30px] font-urbanist font-bold px-2 '>{prop.authorName}</p>
       </div>
