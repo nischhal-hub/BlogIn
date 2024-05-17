@@ -6,14 +6,14 @@ type childrenProp = {
 type AppContextType = {
     isSidebarOpen : boolean;
     setIsSidebarOpen : any;
-    description : string;
+    description : any;
     setDescription : any;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 const AppProvider: FC<childrenProp> = ({children}) => {
     const [isSidebarOpen , setIsSidebarOpen] = useState(false);
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState<any>();
   return (
     <AppContext.Provider value={{isSidebarOpen, setIsSidebarOpen, description,setDescription}}>
         {children}

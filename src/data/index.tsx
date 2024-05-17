@@ -1,9 +1,10 @@
-import React from 'react'
+// import React from 'react'
 import { TiHome } from "react-icons/ti";
-import { IoPeopleOutline } from "react-icons/io5";
+//import { IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineExplore } from "react-icons/md";
 import { MdOutlineLibraryMusic } from "react-icons/md";
-import { MdOutlineStorefront } from "react-icons/md";
+import { SiWritedotas } from "react-icons/si";
+//import { MdOutlineStorefront } from "react-icons/md";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdOutlinePerson } from "react-icons/md";
@@ -32,16 +33,16 @@ export const sidebarLinks: SidebarLinks = [
         links : [
             {label:"Home",icon:<TiHome />,url:'/' },
             {label:"Explore",icon:<MdOutlineExplore/>,url:'/explore' },
-            {label:"Library",icon:<MdOutlineLibraryMusic/>,url:'/library' },
+            {label:"Add blog",icon:<SiWritedotas />,url:'/addblog' },
         ]
     },
     {
         page:'personal',
         links : [
-            {label:"Saved",icon:<MdOutlineVideoLibrary/>,url:'/saved' },
-            {label:"Calendar",icon:<FaRegCalendarAlt/>,url:'/calendar' },
             {label:"Profile",icon:<MdOutlinePerson/>,url:'/profile' },
-            {label:"Settings",icon:<AiOutlineSetting/>,url:'/settings' },
+            {label:"Saved",icon:<MdOutlineVideoLibrary/>,url:'/saved' },
+            // {label:"Calendar",icon:<FaRegCalendarAlt/>,url:'/calendar' },
+            // {label:"Settings",icon:<AiOutlineSetting/>,url:'/settings' },
             {label:"Discord",icon:<FaDiscord/>,url:'/discord' },
             {label:"Log out",icon:<MdLogout/>,url:'/logout' },
         ]

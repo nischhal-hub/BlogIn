@@ -15,7 +15,7 @@ const Editor = () => {
                 "type": "header",
                 "data": {
                     "text": "Let's start a awesome blog.🥳",
-                    "level": 1
+                    "level": 3
                 }
             },
         ]
@@ -30,6 +30,7 @@ const Editor = () => {
             data: DEFAULT_INITIAL_DATA,
             onChange: async () => {
                 let content = await editor.saver.save()
+                console.log(content)
                 setDescription(content)
             },
             tools: {

@@ -92,8 +92,9 @@ function SingleBlog() {
                           </div>
                         </div>
                       )
-                    else if (data.type == 'header')
-                      return (<p key={item.id} className='font-bold text-accent texl-xl'>{item.data.text}</p>)
+                    else if (data.type == 'header'){
+                      console.log("i am header.")
+                      return (<h1 key={item.id} className='font-bold text-accent texl-xl'>{item.data.text}</h1>)}
                   })}
                 </div>
 
