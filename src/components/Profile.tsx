@@ -3,28 +3,35 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SiPanasonic } from 'react-icons/si';
+// import { SiPanasonic } from 'react-icons/si';
 import { useMutation } from '@tanstack/react-query';
+import Editor from './Editor';
 import { postBlog } from '../api';
 
 type FormFields = {
-    title: number;
-    overview: number;
-    thumbnailPic: File;
+    title: string;
+    overview: string;
+    image: File;
     content: string;
 }
 
 
 const Profile: FC = () => {
-    const [file, setFile] = useState<string>("");    
+    const [file, setFile] = useState<string>("");
     const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
     const { mutate, isPending } = useMutation({
         mutationFn: (newBlog) => postBlog((newBlog)),
     })
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        mutate(data)
         console.log(data)
+        const formData = new FormData();
+        formData.append("title", data.title)
+        formData.append("overview", data.overview)
+        formData.append("content", data.content)
+        formData.append("image", data.image)
+        console.log(formData)
+        mutate(formData)
     }
     const handleChange = (e: any) => {
         console.log(e.target.files[0])
@@ -34,7 +41,7 @@ const Profile: FC = () => {
             setFile(URL.createObjectURL(selectedFile));
         }
     }
-    
+
     return (
         <div className='flex w-full'>
             <div className='w-1/6'></div>
@@ -87,12 +94,12 @@ const Profile: FC = () => {
                                 <p className='font-workSans font-normal text-xs text-textLight'>PNG,GIF,WEBP Max=30MB.</p>
                                 <div className='w-[60%] relative'>
                                     <BiSolidImageAdd className='absolute top-0 left-0 bottom-0 right-0 m-auto w-full text-2xl text-textSecondary-200' />
-                                    <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button> 
+                                    <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button>
                                     <label htmlFor="file" className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2 cursor-pointer'>Upload</label>
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden'>
                                         <img src={file} className='w-full object-cover' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
-                                            <input type="file" id='file' {...register("thumbnailPic", {
+                                            <input type="file" id='file' {...register("image", {
                                                 onChange: (e) => (handleChange(e)),
                                                 required: "Add a thumbnail.",
                                                 validate: (value) => {
@@ -108,23 +115,23 @@ const Profile: FC = () => {
                             </div>
                             <div className="event details mt-6">
                                 <p className='text-textLight text-2xl font-semibold font-urbanist'>Blog content.</p>
-                                
+
                                 <div className='flex flex-col w-full'>
                                     <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Description</p>
-                                    <textarea {...register('content',{
-                                        required:"Write about your blog."
+                                    {/* <textarea {...register('content', {
+                                        required: "Write about your blog."
                                     })} id="" cols="30" rows="10" className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm resize-y' placeholder='Event description' >
                                     </textarea>
-                                    {errors.content && <span className='text-sm text-error font-workSans mt-2'>{errors.content.message}</span>}
+                                    {errors.content && <span className='text-sm text-error font-workSans mt-2'>{errors.content.message}</span>} */}
 
+                                <Editor />
                                 </div>
-
                             </div>
-                            
+
                             <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Submit</button>
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
