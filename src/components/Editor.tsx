@@ -3,7 +3,11 @@ import EditorJS from '@editorjs/editorjs'
 import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import LinkTool from '@editorjs/link'
+import RawTool from '@editorjs/raw';
+import { useGlobalContext } from '../context'
+
 const Editor = () => {
+    const {setDescription} = useGlobalContext();
     const DEFAULT_INITIAL_DATA = {
         "time": new Date().getTime(),
         "blocks": [
@@ -26,7 +30,7 @@ const Editor = () => {
             data: DEFAULT_INITIAL_DATA,
             onChange: async () => {
                 let content = await editor.saver.save()
-                console.log(content)
+                setDescription(content)
             },
             tools: {
                 header: {
@@ -42,6 +46,10 @@ const Editor = () => {
                 },
                 linkTool:{
                     class:LinkTool,
+                    inlineToolbar:true
+                },
+                raw:{
+                    class:RawTool,
                     inlineToolbar:true
                 }
             },
@@ -69,7 +77,7 @@ const Editor = () => {
     //   });
 
     return (
-        <div id='editorjs' className='bg-textLight rounded-md pl-6 py-4 font-urbanist'></div>
+        <div id='editorjs' className='bg-secondary rounded-md px-6 py-4 font-urbanist'></div>
     )
 }
 

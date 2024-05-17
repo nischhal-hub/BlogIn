@@ -7,16 +7,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from '@tanstack/react-query';
 import Editor from './Editor';
 import { postBlog } from '../api';
+import { useGlobalContext } from '../context';
 
 type FormFields = {
     title: string;
     overview: string;
     image: File;
-    content: string;
+    //content: string;
 }
 
 
 const Profile: FC = () => {
+    const {description} = useGlobalContext();
     const [file, setFile] = useState<string>("");
     const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
     const { mutate, isPending } = useMutation({
@@ -28,7 +30,7 @@ const Profile: FC = () => {
         const formData = new FormData();
         formData.append("title", data.title)
         formData.append("overview", data.overview)
-        formData.append("content", data.content)
+        formData.append("content", description)
         formData.append("image", data.image)
         console.log(formData)
         mutate(formData)
@@ -110,7 +112,7 @@ const Profile: FC = () => {
                                             })} />
                                         </div>
                                     </div>
-                                    {errors.thumbnailPic && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.thumbnailPic.message}</span>}
+                                    {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
                                 </div>
                             </div>
                             <div className="event details mt-6">
