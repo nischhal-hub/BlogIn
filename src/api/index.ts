@@ -8,6 +8,7 @@ import axios from "axios"
 // }
 
 // const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
+const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
 
 export const fetchBlog = async () => {
     try {
@@ -37,7 +38,6 @@ export const fetchSingleBlog: any = async (id: string) => {
 
 export const postBlog = async (blogData: any) => {
     const url = "http://192.168.1.227:5000/api/blog/create";
-    const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
     const blogs = JSON.stringify(blogData)
     console.log(blogs)
     try {
@@ -57,7 +57,6 @@ export const getProfile = async () => {
     const urls = [`http://192.168.1.227:5000/api/user/get/c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d`,
         `http://192.168.1.227:5000/api/blog/get/my`
     ]
-    const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
     const requests = urls.map(url => axios.get(url, {
         headers: {
             'Authorization': `${authToken}`
@@ -72,5 +71,15 @@ export const getProfile = async () => {
         return responses;
     } catch (error) {
         console.error("Failed to post blog:", (error as any).responses.data);
+    }
+}
+
+export const deleteBlog=(id):void=>{
+    try {
+        const response = axios.delete(URL, {
+            headers: {
+            'Authorization' : `${authToken}`
+            },
+            });
     }
 }

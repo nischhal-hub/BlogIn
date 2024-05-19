@@ -100,7 +100,7 @@ const Profile: FC = () => {
                                         <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Title</p>
                                         <input type="text" {...register('title', {
                                             required: "Enter Title",
-                                        })} className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm required:border-accent required:border-[1px]' placeholder='$45.99' />
+                                        })} className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm required:border-accent required:border-[1px]' placeholder='Eg. The rockerzz' />
                                         {errors.title && <span className='text-sm text-error font-workSans mt-2'>{errors.title.message}</span>}
                                     </div>
                                     <div className='flex flex-col ml-4 w-full'>

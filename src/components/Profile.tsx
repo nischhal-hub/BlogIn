@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from './Card'
-import { getProfile } from '../api'
+import { getProfile, deleteBlog } from '../api'
 import { useQuery,useMutation } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 const Profile = () => {
@@ -8,9 +8,11 @@ const Profile = () => {
         queryFn: () => getProfile(),
         queryKey: ['profile']
     })
-    // const {mutate, isPendig, isSuccess} = useMutation({
-    //     mutationFn : ()=> deleteBlog(id),
-    // })
+    
+    const {mutate, isPending, isSuccess} = useMutation({
+        mutationFn : ()=> deleteBlog(id),
+    })
+
     console.log(data)
     if (isLoading)
         return (
@@ -45,7 +47,7 @@ const Profile = () => {
 
                                     <div className='flex mt-1 w-[80%] justify-around'>
                                         <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
-                                        <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'>Edit</button>
+                                        <button onClick={()=>mutate(item.id)}  className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'>Edit</button>
                                     </div>
                                 </div>
                             </div>))}
