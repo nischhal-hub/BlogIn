@@ -12,8 +12,8 @@ const Profile = () => {
         queryKey: ['profile']
     })
 
-
-    const { mutate, isPending, isSuccess } = useMutation({
+    // { mutate, isPending, isSuccess }
+    const removeBlog = useMutation({
         mutationFn: (id) => deleteBlog(id)
     })
 
@@ -24,6 +24,11 @@ const Profile = () => {
 
     console.log(data)
     if (isLoading)
+        return (
+            <div className='flex justify-center items-center w-full h-screen'>
+                <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
+            </div>)
+    if (removeBlog.isPending)
         return (
             <div className='flex justify-center items-center w-full h-screen'>
                 <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
@@ -55,7 +60,9 @@ const Profile = () => {
                                 <div >
 
                                     <div className='flex w-72 mt-1 justify-around'>
-                                        <button onClick={() => mutate(item.id)} className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
+                                        <button onClick={() => mutate(item.id, {
+                                            onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] })
+                                        })} className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
                                         <button onClick={() => handleEdit(item.id)} className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to={`/editblog/${item.id}`} >Edit</Link></button>
                                     </div>
                                 </div>

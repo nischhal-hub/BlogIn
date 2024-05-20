@@ -18,7 +18,7 @@ type FormFields = {
 }
 // { mutate, isPending, isSuccess, isError }
 
-const AddBlog: FC = () => {
+const EditBlog: FC = () => {
     const { description, isEditing, setIsEditing, editId, setEditId, setEditorContent } = useGlobalContext();
     //const { id } = useParams();
     const [file, setFile] = useState<string>("");
@@ -74,12 +74,7 @@ const AddBlog: FC = () => {
                 <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
             </div>
         )
-    // if (updateBlog.isPending)
-    //     return (
-    //         <div className='flex justify-center items-center w-full h-screen'>
-    //             <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
-    //         </div>
-    //     )
+
     if (createBlog.isSuccess)
         return (
             <div className='flex justify-center items-center w-full h-screen flex-col'>
@@ -90,16 +85,7 @@ const AddBlog: FC = () => {
                 </div>
             </div>
         )
-    // if (updateBlog.isSuccess){
-    //     return (
-    //         <div className='flex justify-center items-center w-full h-screen flex-col'>
-    //             <h2 className='font-bold text-3xl text-textLight'>Blog updated successfully.</h2>
-    //             <div className='flex mt-4'>
-    //                 <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/addblog'>Add more blog</Link></button>
-    //                 <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to='/'>Go to home page.</Link></button>
-    //             </div>
-    //         </div>
-    //     )}
+
     if (createBlog.isError)
         return (
             <div className='flex justify-center items-center w-full h-screen'>
@@ -187,7 +173,7 @@ const AddBlog: FC = () => {
                                     <Editor />
                                 </div>
                             </div>
-                            <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Submit</button>
+                            <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Edit</button>
                             {/* <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>{isEditing ? `Edit` : `Submit`}</button> */}
                         </form>
                     </div>
@@ -198,4 +184,4 @@ const AddBlog: FC = () => {
     )
 }
 
-export default AddBlog
+export default EditBlog

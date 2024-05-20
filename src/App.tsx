@@ -6,6 +6,7 @@ import AddBlog from './components/AddBlog'
 import SharedLayout from './components/SharedLayout'
 import { Routes,Route,Navigate } from 'react-router-dom'
 import Profile from './components/Profile'
+import EditBlog from './components/EditBlog'
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
       <Route path='/' element={<SharedLayout />}>
           <Route path='/' element={<Home/>}/>
           <Route path='/addBlog' element={<AddBlog/>}/>
-          <Route path='/editBlog/:id' element={<AddBlog/>}/>
+          <Route path='/editBlog/:id' element={<EditBlog/>}/>
           <Route path='/blogs/:id' element={<SingleBlog/>}/>
           <Route path='/profile' element={<Profile />}/>
       </Route>
