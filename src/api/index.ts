@@ -1,4 +1,5 @@
 import axios from "axios"
+
 //import authFetch from "../axios/custom"
 // type PostData = {
 //     title: string;
@@ -8,8 +9,13 @@ import axios from "axios"
 // }
 
 // const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
-const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
 
+type EditBlog = {
+    blogData:FormData;
+    id:string;
+}
+const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
+//const {editId} = useGlobalContext()
 export const fetchBlog = async () => {
     try {
         const resp = await axios('http://192.168.1.227:5000/api/blog/get-all')
@@ -70,16 +76,33 @@ export const getProfile = async () => {
         });
         return responses;
     } catch (error) {
-        console.error("Failed to post blog:", (error as any).responses.data);
+        console.error("Failed to post blog:", (error as any).responses.error);
     }
 }
 
-export const deleteBlog=(id):void=>{
+export const deleteBlog= async (id:any)=>{
     try {
-        const response = axios.delete(URL, {
+        const response = await axios.delete(`http://192.168.1.227:5000/api/blog/delete/${id}`, {
             headers: {
             'Authorization' : `${authToken}`
             },
             });
+        return response;
+    }catch(error){
+        console.error("Failed to delete blog:", (error as any).response.error);
+
     }
+}
+
+export const editBlog = async (blogData,id)=>{
+    console.log(id)
+    try{
+    const response = await axios.patch(`http://192.168.1.227:5000/api/blog/update/${id}`,blogData,{
+        headers: {
+        'Authorization' : `${authToken}`
+        }})
+        return response;}
+        catch(error){
+            console.error("Failed to delete blog:", (error as any).response.error);
+        }
 }

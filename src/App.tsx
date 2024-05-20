@@ -16,6 +16,7 @@ function App() {
       <Route path='/' element={<SharedLayout />}>
           <Route path='/' element={<Home/>}/>
           <Route path='/addBlog' element={<AddBlog/>}/>
+          <Route path='/editBlog/:id' element={<AddBlog/>}/>
           <Route path='/blogs/:id' element={<SingleBlog/>}/>
           <Route path='/profile' element={<Profile />}/>
       </Route>

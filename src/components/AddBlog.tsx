@@ -2,39 +2,48 @@ import React, { ChangeEvent, FC, useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm} from "react-hook-form";
 // import { SiPanasonic } from 'react-icons/si';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Editor from './Editor';
-import { postBlog } from '../api';
+import { postBlog, fetchSingleBlog, editBlog } from '../api';
 import { useGlobalContext } from '../context';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 type FormFields = {
     title: string;
     overview: string;
-    image: File;
+    image: File|null;
     //content: string;
 }
+// { mutate, isPending, isSuccess, isError }
 
-
-const Profile: FC = () => {
-    const {description} = useGlobalContext();
+const AddBlog: FC = () => {
+    const { description, isEditing, setIsEditing, editId, setEditId, setEditorContent } = useGlobalContext();
+    const { id } = useParams();
     const [file, setFile] = useState<string>("");
-    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
-    const { mutate, isPending, isSuccess, isError } = useMutation({
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
+    const createBlog = useMutation({
         mutationFn: (newBlog) => postBlog((newBlog)),
     })
+    const updateBlog = useMutation({
+        mutationFn: ({newBlog,id}) => editBlog(newBlog,id),
+    })
+
+
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        console.log(data)
+        console.log(data.title)
         const formData = new FormData();
         formData.append("title", data.title)
         formData.append("overview", data.overview)
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image)
-        console.log(formData)
-        mutate(formData)
+        //console.log(formData)
+        if (isEditing){
+            updateBlog.mutate({formData,id})}
+        else
+            createBlog.mutate(formData)
     }
     const handleChange = (e: any) => {
         console.log(e.target.files[0])
@@ -44,28 +53,63 @@ const Profile: FC = () => {
             setFile(URL.createObjectURL(selectedFile));
         }
     }
-    if(isPending)
-        return(
-        <div className='flex justify-center items-center w-full h-screen'>
-        <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
-        </div>
-    )
-    if(isSuccess)
-        return(
-        <div className='flex justify-center items-center w-full h-screen flex-col'>
-        <h2 className='font-bold text-3xl text-textLight'>Blog added successfully.</h2>
-        <div className='flex mt-4'>
-        <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/addblog'>Add more blog</Link></button>
-        <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to='/'>Go to home page.</Link></button>
-        </div>
-        </div>
-    )
-    if(isError)   
-        return(
+
+    if (isEditing && editId === id) {
+        console.log(id)
+        const {data, isSuccess} = useQuery({
+            queryFn: () => fetchSingleBlog(id),
+            queryKey: ['singleBlog',id]
+        });
+        if (isSuccess) {
+            console.log(data)
+            setValue("title", data.title)
+            setValue("image", data.image)
+            setValue("overview", data.overview)
+            //setEditorContent(data.content)
+        }
+    }
+    if (createBlog.isPending)
+        return (
             <div className='flex justify-center items-center w-full h-screen'>
-            <h2 className='font-bold text-3xl text-textLight'>Error adding blog.</h2>
+                <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
+            </div>
+        )
+    if (updateBlog.isPending)
+        return (
+            <div className='flex justify-center items-center w-full h-screen'>
+                <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
+            </div>
+        )
+    if (createBlog.isSuccess)
+        return (
+            <div className='flex justify-center items-center w-full h-screen flex-col'>
+                <h2 className='font-bold text-3xl text-textLight'>Blog added successfully.</h2>
+                <div className='flex mt-4'>
+                    <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/addblog'>Add more blog</Link></button>
+                    <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to='/'>Go to home page.</Link></button>
+                </div>
+            </div>
+        )
+    if (updateBlog.isSuccess){
+        return (
+            <div className='flex justify-center items-center w-full h-screen flex-col'>
+                <h2 className='font-bold text-3xl text-textLight'>Blog updated successfully.</h2>
+                <div className='flex mt-4'>
+                    <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/addblog'>Add more blog</Link></button>
+                    <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to='/'>Go to home page.</Link></button>
+                </div>
+            </div>
+        )}
+    if (createBlog.isError)
+        return (
+            <div className='flex justify-center items-center w-full h-screen'>
+                <h2 className='font-bold text-3xl text-textLight'>Error adding blog.</h2>
             </div>)
-    
+    if (updateBlog.isError)
+        return (
+            <div className='flex justify-center items-center w-full h-screen'>
+                <h2 className='font-bold text-3xl text-textLight'>Error updating blog.</h2>
+            </div>)
     return (
         <div className='flex w-full'>
             <div className='w-1/6'></div>
@@ -123,15 +167,7 @@ const Profile: FC = () => {
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden'>
                                         <img src={file} className='w-full object-cover' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
-                                            <input type="file" id='file' {...register("image", {
-                                                onChange: (e) => (handleChange(e)),
-                                                required: "Add a thumbnail.",
-                                                validate: (value) => {
-
-                                                    if (value[0].size > 1000000)
-                                                        return "Select image file less than 78KB";
-                                                }
-                                            })} />
+                                            <input type="file" id='file' {...register("image")} />
                                         </div>
                                     </div>
                                     {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
@@ -148,11 +184,11 @@ const Profile: FC = () => {
                                     </textarea>
                                     {errors.content && <span className='text-sm text-error font-workSans mt-2'>{errors.content.message}</span>} */}
 
-                                <Editor />
+                                    <Editor />
                                 </div>
                             </div>
-
-                            <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Submit</button>
+                            {isEditing ? <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4' >Edit</button> : <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Submit</button>}
+                            {/* <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>{isEditing ? `Edit` : `Submit`}</button> */}
                         </form>
                     </div>
 
@@ -162,4 +198,4 @@ const Profile: FC = () => {
     )
 }
 
-export default Profile
+export default AddBlog

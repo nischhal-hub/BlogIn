@@ -7,19 +7,8 @@ import RawTool from '@editorjs/raw';
 import { useGlobalContext } from '../context'
 
 const Editor = () => {
-    const {setDescription} = useGlobalContext();
-    const DEFAULT_INITIAL_DATA = {
-        "time": new Date().getTime(),
-        "blocks": [
-            {
-                "type": "header",
-                "data": {
-                    "text": "Let's start a awesome blog.🥳",
-                    "level": 3
-                }
-            },
-        ]
-    }
+    const {setDescription,editorContent} = useGlobalContext();
+    const DEFAULT_INITIAL_DATA = editorContent
     const initEditor = () => {
         const editor = new EditorJS({
             holder: "editorjs",

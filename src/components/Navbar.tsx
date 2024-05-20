@@ -30,7 +30,7 @@ const Navbar = () => {
                         <div className="profile-pic w-10 h-10 mx-4 ml-4 mr-2 pt-1">
                             <img src={profile} alt="profile picture" className='object-cover' />
                         </div>
-                        <p className='font-inter font-semibold text-textLight'>Hi, Elisha</p>
+                        <p className='font-inter font-semibold text-textLight'>Hi, Aakash</p>
                     </div>
                 </div>
             </div>
