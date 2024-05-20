@@ -6,17 +6,30 @@ import LinkTool from '@editorjs/link'
 import RawTool from '@editorjs/raw';
 import { useGlobalContext } from '../context'
 
-const Editor = () => {
-    const {setDescription,editorContent} = useGlobalContext();
-    const DEFAULT_INITIAL_DATA = editorContent
-    const initEditor = () => {
+const Editor = ({blockdata}:any) => {
+    console.log(blockdata)
+    const {setDescription} = useGlobalContext();
+    const DEFAULT_INITIAL_DATA = {
+        "time": new Date().getTime(),
+        "blocks": [
+            {
+                "type": "header",
+                "data": {
+                    "text": "Let's start a awesome blog.🥳",
+                    "level": 3
+                }
+            },
+        ]
+    }
+    const ejInstance = useRef();
+    const initEditor = (initData?: any) => {
         const editor = new EditorJS({
             holder: "editorjs",
             onReady: () => {
                 ejInstance.current = editor
             },
             autofocus: true,
-            data: DEFAULT_INITIAL_DATA,
+            data:initData || DEFAULT_INITIAL_DATA,
             onChange: async () => {
                 let content = await editor.saver.save()
                 console.log(content)
@@ -46,11 +59,11 @@ const Editor = () => {
         });
     }
 
-    const ejInstance = useRef();
+    
 
     useEffect(() => {
         if (ejInstance.current === null) {
-          initEditor();
+          initEditor(blockdata);
         }
     
         return () => {

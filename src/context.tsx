@@ -13,33 +13,34 @@ type AppContextType = {
     setIsEditing : any;
     editId : string;
     setEditId : any;
-    editorContent :any;
-    setEditorContent : any;
+    blogs:any;
+    setBlogs:any;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 const AppProvider: FC<childrenProp> = ({children}) => {
-    const data = {
-        "time": new Date().getTime(),
-        "blocks": [
-            {
-                "type": "header",
-                "data": {
-                    "text": "Let's start a awesome blog.🥳",
-                    "level": 3
-                }
-            },
-        ]
-    }
+    // const data = {
+    //     "time": new Date().getTime(),
+    //     "blocks": [
+    //         {
+    //             "type": "header",
+    //             "data": {
+    //                 "text": "Let's start a awesome blog.🥳",
+    //                 "level": 3
+    //             }
+    //         },
+    //     ]
+    // }
     const [isSidebarOpen , setIsSidebarOpen] = useState(false);
     const [description, setDescription] = useState<any>();
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState("");
-    const [editorContent, setEditorContent] = useState(data)
+    const [blogs, setBlogs] = useState<any>()
+    // const [editorContent, setEditorContent] = useState(data)
 
 
   return (
-    <AppContext.Provider value={{isSidebarOpen, setIsSidebarOpen, description,setDescription, editId, setEditId, isEditing,setIsEditing,editorContent,setEditorContent}}>
+    <AppContext.Provider value={{isSidebarOpen, setIsSidebarOpen, description,setDescription, editId, setEditId, isEditing,setIsEditing,blogs,setBlogs}}>
         {children}
     </AppContext.Provider>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from './Card'
 import { getProfile, deleteBlog } from '../api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context'
 const Profile = () => {
     const queryClient = useQueryClient();
-    const { setEditId, setIsEditing } = useGlobalContext();
+    const { setEditId, setIsEditing,setBlogs} = useGlobalContext();
     const { data, isLoading } = useQuery({
         queryFn: () => getProfile(),
         queryKey: ['profile']
     })
-
+    useEffect(()=>{
+        setBlogs(data)
+    },[data])
     // { mutate, isPending, isSuccess }
     const removeBlog = useMutation({
         mutationFn: (id) => deleteBlog(id)
@@ -60,7 +62,7 @@ const Profile = () => {
                                 <div >
 
                                     <div className='flex w-72 mt-1 justify-around'>
-                                        <button onClick={() => mutate(item.id, {
+                                        <button onClick={() => removeBlog.mutate(item.id, {
                                             onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] })
                                         })} className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
                                         <button onClick={() => handleEdit(item.id)} className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to={`/editblog/${item.id}`} >Edit</Link></button>

@@ -11,8 +11,8 @@ import axios from "axios"
 // const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
 
 type EditBlog = {
-    blogData:FormData;
-    id:string;
+    blogData: FormData;
+    id: string;
 }
 const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
 //const {editId} = useGlobalContext()
@@ -44,8 +44,7 @@ export const fetchSingleBlog: any = async (id: string) => {
 
 export const postBlog = async (blogData: any) => {
     const url = "http://192.168.1.227:5000/api/blog/create";
-    const blogs = JSON.stringify(blogData)
-    console.log(blogs)
+    console.log(blogData)
     try {
         const response = await axios.post(url, blogData, {
             headers: {
@@ -80,29 +79,32 @@ export const getProfile = async () => {
     }
 }
 
-export const deleteBlog= async (id:any)=>{
+export const deleteBlog = async (id: any) => {
     try {
         const response = await axios.delete(`http://192.168.1.227:5000/api/blog/delete/${id}`, {
             headers: {
-            'Authorization' : `${authToken}`
+                'Authorization': `${authToken}`
             },
-            });
+        });
         return response;
-    }catch(error){
+    } catch (error) {
         console.error("Failed to delete blog:", (error as any).response.error);
 
     }
 }
 
-export const editBlog = async (blogData,id)=>{
+export const editBlog = async (blogData:any,id:any) => {
     console.log(id)
-    try{
-    const response = await axios.patch(`http://192.168.1.227:5000/api/blog/update/${id}`,blogData,{
-        headers: {
-        'Authorization' : `${authToken}`
-        }})
-        return response;}
-        catch(error){
-            console.error("Failed to delete blog:", (error as any).response.error);
-        }
+    console.log(blogData)
+    try {
+        const response = await axios.patch(`http://192.168.1.227:5000/api/blog/update/${id}`, blogData, {
+            headers: {
+                'Authorization': `${authToken}`
+            }
+        })
+        return response;
+    }
+    catch (error) {
+        console.error("Failed to delete blog:", (error as any).response.error);
+    }
 }

@@ -72,6 +72,12 @@ function SingleBlog() {
                   {blogContent.blocks.map((item: any) => {
                     if (item.type == 'paragraph')
                       return <p key={item.id} className='text-justify'>{item.data.text}</p>
+                    else if(item.type == 'list')
+                      return (
+                    <ul className='list-disc ml-5'>
+                      {item.data.items.map((list:any, i:any)=>(<li key={i}>{list}</li>))}
+                    </ul>
+                    );
                     else if (item.type == 'code')
                       return (
                         <div key={item.id}
@@ -92,9 +98,8 @@ function SingleBlog() {
                           </div>
                         </div>
                       )
-                    else if (data.type == 'header'){
-                      console.log("i am header.")
-                      return (<h1 key={item.id} className='font-bold text-accent texl-xl'>{item.data.text}</h1>)}
+                    else if(item.type == 'header')
+                      return<p className='text-xl font-bold font-urbanist my-2'>{item.data.text}</p>
                   })}
                 </div>
 

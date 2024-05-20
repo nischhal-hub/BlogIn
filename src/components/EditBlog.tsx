@@ -1,36 +1,37 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
-import { SubmitHandler, useForm} from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 // import { SiPanasonic } from 'react-icons/si';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Editor from './Editor';
-import { postBlog } from '../api';
+import { fetchSingleBlog, editBlog } from '../api';
 import { useGlobalContext } from '../context';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 type FormFields = {
     title: string;
     overview: string;
-    image: File|null;
+    image: File | null;
     //content: string;
 }
 // { mutate, isPending, isSuccess, isError }
 
 const EditBlog: FC = () => {
-    const { description, isEditing, setIsEditing, editId, setEditId, setEditorContent } = useGlobalContext();
-    //const { id } = useParams();
+    const queryClient = useQueryClient();
+    const { description, isEditing, setIsEditing, editId, setEditId,blogs } = useGlobalContext();
+    console.log(blogs[1].data.data)
+    const { id } = useParams();
     const [file, setFile] = useState<string>("");
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
-    const createBlog = useMutation({
-        mutationFn: (newBlog) => postBlog((newBlog)),
+    const blogDesc = blogs[1].data.data.find((item:any)=>item.id === id);
+    const [story, setStory] = useState(JSON.parse(blogDesc.content))
+    console.log(story)
+    const updateBlog = useMutation({
+        mutationFn: ({ formData, id }) => editBlog(formData, id),
     })
-    // const updateBlog = useMutation({
-    //     mutationFn: ({newBlog,id}) => editBlog(newBlog,id),
-    // })
-
-
+    
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         console.log(data.title)
@@ -39,12 +40,18 @@ const EditBlog: FC = () => {
         formData.append("overview", data.overview)
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image)
-        createBlog.mutate(formData)
-        //console.log(formData)
-        // if (isEditing){
-        //     updateBlog.mutate({formData,id})}
-        // else
+        console.log(formData)
+        updateBlog.mutate({formData,id}, {
+            onSuccess: () => {
+                setEditId("");
+                setIsEditing(false);
+                queryClient.invalidateQueries({
+                    queryKey:['blogs']
+                })
+            }
+        })
     }
+
     const handleChange = (e: any) => {
         console.log(e.target.files[0])
         const selectedFile = e.target.files?.[0]
@@ -53,32 +60,26 @@ const EditBlog: FC = () => {
             setFile(URL.createObjectURL(selectedFile));
         }
     }
+    useEffect(() => {
+        if (isEditing && editId === id) {
+            setValue("title", blogDesc.title);
+            setValue("image", blogDesc.image);
+            setValue("overview", blogDesc.overview);
+        }
 
-    // if (isEditing && editId === id) {
-    //     console.log(id)
-    //     const {data, isSuccess} = useQuery({
-    //         queryFn: () => fetchSingleBlog(id),
-    //         queryKey: ['singleBlog',id]
-    //     });
-    //     if (isSuccess) {
-    //         console.log(data)
-    //         setValue("title", data.title)
-    //         setValue("image", data.image)
-    //         setValue("overview", data.overview)
-    //         //setEditorContent(data.content)
-    //     }
-    // }
-    if (createBlog.isPending)
+    }, [isEditing,editId,id])
+
+    if (updateBlog.isPending)
         return (
             <div className='flex justify-center items-center w-full h-screen'>
                 <h2 className='font-bold text-3xl text-textLight'>Loading....</h2>
             </div>
         )
 
-    if (createBlog.isSuccess)
+    if (updateBlog.isSuccess)
         return (
             <div className='flex justify-center items-center w-full h-screen flex-col'>
-                <h2 className='font-bold text-3xl text-textLight'>Blog added successfully.</h2>
+                <h2 className='font-bold text-3xl text-textLight'>Blog edited successfully.</h2>
                 <div className='flex mt-4'>
                     <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/addblog'>Add more blog</Link></button>
                     <button className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to='/'>Go to home page.</Link></button>
@@ -86,17 +87,12 @@ const EditBlog: FC = () => {
             </div>
         )
 
-    if (createBlog.isError)
+    if (updateBlog.isError)
         return (
             <div className='flex justify-center items-center w-full h-screen'>
-                <h2 className='font-bold text-3xl text-textLight'>Error adding blog.</h2>
+                <h2 className='font-bold text-3xl text-textLight'>Error updating blog.</h2>
             </div>)
-    // if (updateBlog.isError)
-    //     return (
-    //         <div className='flex justify-center items-center w-full h-screen'>
-    //             <h2 className='font-bold text-3xl text-textLight'>Error updating blog.</h2>
-    //         </div>)
-    return (
+    return(
         <div className='flex w-full'>
             <div className='w-1/6'></div>
             <div className='w-5/6'>
@@ -153,7 +149,9 @@ const EditBlog: FC = () => {
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden'>
                                         <img src={file} className='w-full object-cover' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
-                                            <input type="file" id='file' {...register("image")} />
+                                            <input type="file" id='file' {...register("image",{
+                                                onChange:(e)=>handleChange(e),
+                                            })} />
                                         </div>
                                     </div>
                                     {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
@@ -170,7 +168,7 @@ const EditBlog: FC = () => {
                                     </textarea>
                                     {errors.content && <span className='text-sm text-error font-workSans mt-2'>{errors.content.message}</span>} */}
 
-                                    <Editor />
+                                    <Editor blockdata={story}/>
                                 </div>
                             </div>
                             <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Edit</button>

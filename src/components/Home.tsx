@@ -31,7 +31,7 @@ const Home:FC = () => {
                             <CiSearch className='text-3xl text-textLight'/>
                         </div>
                         <div className="card-section mt-8 grid grid-cols-[repeat(auto-fill,minmax(288px,1fr))]">
-                            {data.data.map((item: { title: string; id: string; image: string; author: { name: string; }; createdAt: string; },i:number)=>(<Link to={`blogs/${item.id}`}><Card key={i} title={item.title} id={item.id} image={item.image} authorName={item.author.name} createdAt={item.createdAt} /> </Link> ))}
+                            {data.data.map((item: { title: string; id: string; image: string; author: { name: string; }; createdAt: string; },i:number)=>(<Link key={i} to={`blogs/${item.id}`}><Card  title={item.title} id={item.id} image={item.image} authorName={item.author.name} createdAt={item.createdAt} /> </Link> ))}
                         </div>
                     </div>
                 </div>
