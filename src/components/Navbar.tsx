@@ -15,8 +15,9 @@ const Navbar = () => {
             <div className='flex h-20 border-b-[1px] border-borderColor w-full'>
                 <div className='flex items-center w-1/6'>
                     <GiHamburgerMenu className='text-textLight m-6 w-9 h-6 cursor-pointer' onClick={()=>(setIsSidebarOpen((v: boolean)=>!v))} />
-                    <div className="icon my-4 mx-2">
+                    <div className="icon my-4 mx-2 flex justify-center items-center">
                         <img src={icon} alt="icon" />
+                        <p className='text-textLight font-urbanist text-2xl font-semibold ml-3'>BlogIn</p>
                     </div>
                 </div>
                 <div className="profile-controls flex items-center justify-between w-[75%]">

@@ -14,7 +14,6 @@ type FormFields = {
     title: string;
     overview: string;
     image: File;
-    //content: string;
 }
 // { mutate, isPending, isSuccess, isError }
 
@@ -30,12 +29,11 @@ const AddBlog: FC = () => {
 
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
-        console.log(data.title)
         const formData = new FormData();
         formData.append("title", data.title)
         formData.append("overview", data.overview)
         formData.append("content", JSON.stringify(description))
-        formData.append("image", data.image)
+        formData.append("image", data.image[0])
         createBlog.mutate(formData,{
             onSuccess:()=>{
                 queryClient.invalidateQueries({

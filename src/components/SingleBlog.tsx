@@ -54,7 +54,7 @@ function SingleBlog() {
                 <Link to="/"><button className='flex items-center font-inter font-normal text-base text-textLight'><IoIosArrowBack className='mr-4' />Back</button></Link>
               </div>
               <div className='absolute z-20 h-[620px] w-full blur-sm bg-transparentBackground'></div>
-              <div className={` absolute image-container w-full blur-sm h-[620px] bg-[url('http://192.168.1.227:5000/api/images/${extractFileName(data.image)}')] bg-contain z-10`}>
+              <div className={` absolute image-container w-full blur-sm h-[620px] bg-[url("http://192.168.1.227:5000/api/images/${extractFileName(data.image)}")] bg-contain z-10`}>
                 {/* <img className='absolute' src="https://s3-alpha-sig.figma.com/img/08dd/958e/934f67e6377d8861a975b9cf9c2a425f?Expires=1716768000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CqC14rK~f~mQr47vOCV9PEh7iQ60gyFMQZxt4UpRiHF8fgAniLUt3vRy6k~7Vhpwxq6oaDbfXworvS~oPESZwJ~jdfkPxLV~3piOKETIdS6EOy8JNsYvAd~JRWbBUgnSN2zdklyvXsKTqXGabHRZgVAty7Nva9BKgx7GVSqNxbMq7CambBzmZdQc5BvJkclMH3hVjYKzni7H64nUaC8BdqTb4VwPpGBtGCneoJVK0syHnxwzS6vr-7SJDUVLDjxBKb4405K4mAD-0nQbY8v2bCRAyoRdNM-M8EtTekMPnQ3mpQTpedXp6erSCD4cttaAHPYA7nb3IEgmeP8MVtveVQ__" alt="" />  */}
               </div>
               <div className='w-full h-80 z-40 flex flex-col items-center'>
