@@ -1,19 +1,50 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from './Card'
 import { getProfile, deleteBlog } from '../api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../context'
+import usePortal from 'react-useportal'
+
+const useModal = () => {
+    const { isOpen, openPortal, togglePortal, closePortal, Portal, ref } = usePortal({
+        onOpen({ portal }) {
+            portal.current.style.cssText = `
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          z-index: 1000;
+          background-color:#FFF2E5;
+          padding:20px;
+          border-radius:10px;
+        `
+        }
+    })
+
+    return {
+        Modal: Portal,
+        openModal: openPortal,
+        toggleModal: togglePortal,
+        closeModal: closePortal,
+        isOpen,
+        ref
+    }
+}
+
+
 const Profile = () => {
     const queryClient = useQueryClient();
-    const { setEditId, setIsEditing,setBlogs} = useGlobalContext();
+    const { setEditId, setIsEditing, setBlogs } = useGlobalContext();
+    const { openModal, closeModal, isOpen, Modal, ref } = useModal()
+    const [deleteId, setDeleteId] = useState();
     const { data, isLoading } = useQuery({
         queryFn: () => getProfile(),
         queryKey: ['profile']
     })
-    useEffect(()=>{
+    useEffect(() => {
         setBlogs(data)
-    },[data])
+    }, [data])
     // { mutate, isPending, isSuccess }
     const removeBlog = useMutation({
         mutationFn: (id) => deleteBlog(id)
@@ -62,15 +93,36 @@ const Profile = () => {
                                 <div >
 
                                     <div className='flex w-72 mt-1 justify-around'>
-                                        <button onClick={() => removeBlog.mutate(item.id, {
-                                            onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] })
-                                        })} 
-                                        className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
+                                        <button ref={ref} onClick={() => {
+                                            openModal()
+                                            setDeleteId(item.id)
+                                        }}
+                                            className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Delete</button>
+
                                         <button onClick={() => handleEdit(item.id)} className='m-3 border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'><Link to={`/editblog/${item.id}`} >Edit</Link></button>
                                     </div>
                                 </div>
                             </div>))}
+                        {isOpen && (
+                            <Modal>
+                                <p className='text-xs font-thin'> Hit ESC or click outside of me.</p>
+                                <div className='font-urbanist relative'>
+                                    <button onClick={closeModal} className='font-bold text-xl absolute right-2 -top-6 hover:text-accent transition-colors'>X</button>
+                                    <p className='font-semibold'>Are you sure you want to delete this blog?</p>
+                                    <div className='w-full flex justify-around'>
+                                        <button onClick={() => removeBlog.mutate(deleteId, {
+                                            onSuccess: () => {
+                                                queryClient.invalidateQueries({ queryKey: ['profile'] });
+                                            }
+                                        })} className='m-3 border-2 border-solid border-borderColor rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textDark'>Yes</button>
+                                        <button onClick={closeModal} className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textDark'>No</button>
 
+                                    </div>
+
+
+                                </div>
+                            </Modal>
+                        )}
                     </div>
                 </div>
             </div>
