@@ -32,7 +32,7 @@ export const sidebarLinks: SidebarLinks = [
         page:'page-urls',
         links : [
             {label:"Home",icon:<TiHome />,url:'/' },
-            {label:"Explore",icon:<MdOutlineExplore/>,url:'/explore' },
+            //{label:"Explore",icon:<MdOutlineExplore/>,url:'/explore' },
             {label:"Add blog",icon:<SiWritedotas />,url:'/addblog' },
         ]
     },
@@ -43,7 +43,7 @@ export const sidebarLinks: SidebarLinks = [
             {label:"Saved",icon:<MdOutlineVideoLibrary/>,url:'/saved' },
             // {label:"Calendar",icon:<FaRegCalendarAlt/>,url:'/calendar' },
             // {label:"Settings",icon:<AiOutlineSetting/>,url:'/settings' },
-            {label:"Discord",icon:<FaDiscord/>,url:'/discord' },
+            // {label:"Discord",icon:<FaDiscord/>,url:'/discord' },
             {label:"Log out",icon:<MdLogout/>,url:'/logout' },
         ]
     }
