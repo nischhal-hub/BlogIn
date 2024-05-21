@@ -1,25 +1,13 @@
 import React, { FC } from 'react'
-import picture from '../assets/Rectangle 2852.png'
-type ItemProps = {
-  id: string;
-  title: string;
-  image: string;
-  authorName: string;
-  createdAt: string;
+import { ItemProps } from '../type';
+import extractFileName from '../utils/extractFIleName';
 
-}
-function extractFileName(path:string) {
-  // Split the path by '\\' or '/'
-  var segments = path.split(/[\\"\/]/);
-  // Get the last segment, which should be the filename
-  var fileName = segments.pop();
-  return fileName;
-}
+
 const Card: FC<ItemProps> = (prop) => {
   return (
     <div className='w-72 relative rounded-[12px] mb-2'>
-      <div className="price absolute top-3 right-5">
-        <p className='bg-textLight rounded-[30px] font-urbanist font-bold px-2 '>{prop.authorName}</p>
+      <div className="price absolute top-3 right-4">
+        <p className='bg-textLight rounded-[30px] font-urbanist font-bold px-2 border-2 border-solid border-accent '>{prop.authorName}</p>
       </div>
       <div className='w-72 h-60 bg-transparentGlass rounded-[12px] overflow-hidden'>
 

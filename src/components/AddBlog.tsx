@@ -1,26 +1,20 @@
-import React, { ChangeEvent, FC, useState } from 'react'
-import { IoIosArrowBack } from 'react-icons/io'
-import { MdVerified } from "react-icons/md";
-import { BiSolidImageAdd } from "react-icons/bi";
-import { SubmitHandler, useForm} from "react-hook-form";
-// import { SiPanasonic } from 'react-icons/si';
+import { FC, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { SubmitHandler, useForm} from "react-hook-form";
 import Editor from './Editor';
 import { postBlog } from '../api';
 import { useGlobalContext } from '../context';
+import { FormFields } from '../type';
 import { Link } from 'react-router-dom';
+//*icons
+import { IoIosArrowBack } from 'react-icons/io'
+import { MdVerified } from "react-icons/md";
+import { BiSolidImageAdd } from "react-icons/bi";
 
-type FormFields = {
-    title: string;
-    overview: string;
-    image: File;
-}
-// { mutate, isPending, isSuccess, isError }
 
 const AddBlog: FC = () => {
     const queryClient = useQueryClient();
     const { description } = useGlobalContext();
-    //const { id } = useParams();
     const [file, setFile] = useState<string>("");
     const { register, handleSubmit, formState: { errors }} = useForm<FormFields>();
     const createBlog = useMutation({
