@@ -36,6 +36,8 @@ const AddBlog: FC = () => {
             }
         })
     }
+
+    //*handles the preview of uploaded image.
     const handleChange = (e: any) => {
         console.log(e.target.files[0])
         const selectedFile = e.target.files?.[0]
@@ -67,7 +69,7 @@ const AddBlog: FC = () => {
             <div className='flex justify-center items-center w-full h-screen'>
                 <h2 className='font-bold text-3xl text-textLight'>Error adding blog.</h2>
             </div>)
-  
+
     return (
         <div className='flex w-full'>
             <div className='w-1/6'></div>
@@ -95,9 +97,9 @@ const AddBlog: FC = () => {
                     </div>
                     <div className="form w-[80%] mt-6">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="pricing ">
+                            <div className="pricing">
                                 <p className='text-textLight text-2xl font-semibold font-urbanist'>Blog title.</p>
-                                <div className='pricing-input flex mt-4'>
+                                <div className='pricing-input flex flex-col lg:flex-row mt-4'>
                                     <div className='flex flex-col w-full'>
                                         <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Title</p>
                                         <input type="text" {...register('title', {
@@ -105,10 +107,10 @@ const AddBlog: FC = () => {
                                         })} className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm required:border-accent required:border-[1px]' placeholder='Eg. The rockerzz' />
                                         {errors.title && <span className='text-sm text-error font-workSans mt-2'>{errors.title.message}</span>}
                                     </div>
-                                    <div className='flex flex-col ml-4 w-full'>
+                                    <div className='flex flex-col mt-3 lg:mt-0 lg:ml-4 w-full'>
                                         <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Overview</p>
                                         <input type="text" {...register('overview', {
-                                            required: "Enter no of releases.",
+                                            required: "Enter overview for blog.",
                                         })} className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm' placeholder='0' />
                                         {errors.overview && <span className='text-sm text-error font-workSans mt-2'>{errors.overview.message}</span>}
                                     </div>
@@ -118,12 +120,12 @@ const AddBlog: FC = () => {
                                 <p className='text-textLight text-2xl font-semibold font-urbanist'>Upload your file</p>
                                 <p className='font-workSans font-normal text-xs text-textLight mt-3'>Upload thumbnail.</p>
                                 <p className='font-workSans font-normal text-xs text-textLight'>PNG,GIF,WEBP Max=30MB.</p>
-                                <div className='w-[60%] relative'>
+                                <div className='w-full lg:w-[60%] relative'>
                                     <BiSolidImageAdd className='absolute top-0 left-0 bottom-0 right-0 m-auto w-full text-2xl text-textSecondary-200' />
                                     <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button>
                                     <label htmlFor="file" className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2 cursor-pointer'>Upload</label>
-                                    <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden'>
-                                        <img src={file} className='w-full object-cover' />
+                                    <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
+                                        <img src={file} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
                                             <input type="file" id='file' {...register("image",{
                                                 required:"Upload an image.",
