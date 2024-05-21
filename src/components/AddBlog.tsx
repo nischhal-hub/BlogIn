@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 type FormFields = {
     title: string;
     overview: string;
-    image: File|null;
+    image: File;
     //content: string;
 }
 // { mutate, isPending, isSuccess, isError }
@@ -134,8 +134,11 @@ const AddBlog: FC = () => {
                                         <img src={file} className='w-full object-cover' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
                                             <input type="file" id='file' {...register("image",{
+                                                required:"Upload an image.",
                                                 onChange:(e)=>handleChange(e)
                                             })} />
+                                        {errors.image && <span className='text-sm text-error font-workSans mt-2'>{errors.image.message}</span>}
+
                                         </div>
                                     </div>
                                     {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}

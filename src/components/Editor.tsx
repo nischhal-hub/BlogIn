@@ -3,8 +3,10 @@ import EditorJS from '@editorjs/editorjs'
 import Header from '@editorjs/header'
 import List from '@editorjs/list'
 import LinkTool from '@editorjs/link'
-import RawTool from '@editorjs/raw';
+import RawTool from '@editorjs/raw'
+import ImageTool from '@editorjs/image'
 import { useGlobalContext } from '../context'
+import axios from 'axios'
 
 const Editor = ({blockdata}:any) => {
     console.log(blockdata)
@@ -54,6 +56,30 @@ const Editor = ({blockdata}:any) => {
                 raw:{
                     class:RawTool,
                     inlineToolbar:true
+                },
+                image:{
+                    class:ImageTool,
+                    config:{
+                        uploader:{
+                            async uploadByFile(image:any){
+                                const formData = new FormData();
+                                formData.append("image",image);
+                                const resp = await axios.post(
+                                    `http://192.168.1.227:5000/api/blog-image`, 
+                                    formData,
+                                    {
+                                        headers: {
+                                            'Authorization': `c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d`
+                                        }
+                                    }
+                                );
+                                console.log(resp.data.data)
+                                if(resp.data.data.success === 1){
+                                    return resp.data.data;
+                                }
+                            }
+                        }
+                    }
                 }
             },
         });
@@ -72,12 +98,6 @@ const Editor = ({blockdata}:any) => {
         };
       }, []);
     
-      
-    // editor.save().then((outputData) => {
-    //     console.log('Article data: ', outputData)
-    //   }).catch((error) => {
-    //     console.log('Saving failed: ', error)
-    //   });
 
     return (
         <div id='editorjs' className='bg-secondary rounded-md px-6 py-4 font-urbanist'></div>
