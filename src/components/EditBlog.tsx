@@ -1,33 +1,31 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Editor from './Editor';
+import { editBlog } from '../api';
+import { useGlobalContext } from '../context';
+import { Link, useParams } from 'react-router-dom';
+import { FormFields } from '../type';
+import extractFileName from '../utils/extractFIleName';
+//*icons import
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
-import { SubmitHandler, useForm } from "react-hook-form";
-// import { SiPanasonic } from 'react-icons/si';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Editor from './Editor';
-import { fetchSingleBlog, editBlog } from '../api';
-import { useGlobalContext } from '../context';
-import { Link, useParams } from 'react-router-dom';
 
-type FormFields = {
-    title: string;
-    overview: string;
-    image: File | null;
-    //content: string;
-}
-// { mutate, isPending, isSuccess, isError }
 
 const EditBlog: FC = () => {
     const queryClient = useQueryClient();
     const { description, isEditing, setIsEditing, editId, setEditId,blogs } = useGlobalContext();
-    console.log(blogs[1].data.data)
     const { id } = useParams();
-    const [file, setFile] = useState<string>("");
+    const [file, setFile] = useState("");
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
+    
+    //*list the item to be edited in the page.
     const blogDesc = blogs[1].data.data.find((item:any)=>item.id === id);
+
+    //*below hook is for the initialization of content of editorjs
     const [story, setStory] = useState(JSON.parse(blogDesc.content))
-    console.log(story)
+
     const updateBlog = useMutation({
         mutationFn: ({ formData, id }) => editBlog(formData, id),
     })
@@ -62,6 +60,7 @@ const EditBlog: FC = () => {
     }
     useEffect(() => {
         if (isEditing && editId === id) {
+            console.log(blogDesc.image)
             setValue("title", blogDesc.title);
             setValue("image", blogDesc.image);
             setValue("overview", blogDesc.overview);
@@ -121,7 +120,7 @@ const EditBlog: FC = () => {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="pricing ">
                                 <p className='text-textLight text-2xl font-semibold font-urbanist'>Blog title.</p>
-                                <div className='pricing-input flex mt-4'>
+                                <div className='pricing-input flex flex-col lg:flex-row mt-4'>
                                     <div className='flex flex-col w-full'>
                                         <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Title</p>
                                         <input type="text" {...register('title', {
@@ -129,7 +128,7 @@ const EditBlog: FC = () => {
                                         })} className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm required:border-accent required:border-[1px]' placeholder='Eg. The rockerzz' />
                                         {errors.title && <span className='text-sm text-error font-workSans mt-2'>{errors.title.message}</span>}
                                     </div>
-                                    <div className='flex flex-col ml-4 w-full'>
+                                    <div className='flex flex-col mt-3 lg:mt-0 lg:ml-4 w-full'>
                                         <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Overview</p>
                                         <input type="text" {...register('overview', {
                                             required: "Enter no of releases.",
@@ -142,12 +141,12 @@ const EditBlog: FC = () => {
                                 <p className='text-textLight text-2xl font-semibold font-urbanist'>Upload your file</p>
                                 <p className='font-workSans font-normal text-xs text-textLight mt-3'>Upload thumbnail.</p>
                                 <p className='font-workSans font-normal text-xs text-textLight'>PNG,GIF,WEBP Max=30MB.</p>
-                                <div className='w-[60%] relative'>
+                                <div className='w-full lg:w-[60%] relative'>
                                     <BiSolidImageAdd className='absolute top-0 left-0 bottom-0 right-0 m-auto w-full text-2xl text-textSecondary-200' />
                                     <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button>
                                     <label htmlFor="file" className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2 cursor-pointer'>Upload</label>
-                                    <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden'>
-                                        <img src={file} className='w-full object-cover' />
+                                    <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
+                                        <img src={`http://192.168.1.227:5000/api/images/${extractFileName(blogDesc.image)}`} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
                                             <input type="file" id='file' {...register("image",{
                                                 onChange:(e)=>handleChange(e),
@@ -162,12 +161,6 @@ const EditBlog: FC = () => {
 
                                 <div className='flex flex-col w-full'>
                                     <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Description</p>
-                                    {/* <textarea {...register('content', {
-                                        required: "Write about your blog."
-                                    })} id="" cols="30" rows="10" className='bg-formInput border-2 border-solid border-borderColor px-4 py-2 text-textSecondary-200 rounded-lg font-urbanist font-medium text-sm resize-y' placeholder='Event description' >
-                                    </textarea>
-                                    {errors.content && <span className='text-sm text-error font-workSans mt-2'>{errors.content.message}</span>} */}
-
                                     <Editor blockdata={story}/>
                                 </div>
                             </div>
