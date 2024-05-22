@@ -3,7 +3,7 @@ import Card from './Card'
 import { getProfile, deleteBlog } from '../api'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { useGlobalContext } from '../context'
+import { useGlobalContext } from '../hooks/useGlobalContext'
 import usePortal from 'react-useportal'
 
 const useModal = () => {
@@ -45,7 +45,7 @@ const Profile = () => {
     useEffect(() => {
         setBlogs(data)
     }, [data])
-    // { mutate, isPending, isSuccess }
+
     const removeBlog = useMutation({
         mutationFn: (id) => deleteBlog(id)
     })
@@ -76,7 +76,7 @@ const Profile = () => {
                             <img src="https://th.bing.com/th/id/OIP.0TsJGYhWWOy_hBFOH0hX-gHaHa?rs=1&pid=ImgDetMain" alt="user profile pic" className='w-full h-full object-contain' />
                         </div>
                         <div className='w-3/6 my-2'>
-                            <p className='font-urbanist font-semibold text-xl text-textLight '>{data[0]?.data.data.name}</p>
+                            <p className='font-urbanist font-semibold text-xl text-textLight '>{data?.[0]?.data.data.name}</p>
                             <p className='font-workSans font-light text-sm text-textLight '>{data[0]?.data.data.email}</p>
                             <p className='font-workSans font-light text-sm text-textLight '>{data[0]?.data.data.number}</p>
                             <p className='font-workSans font-light text-sm text-textLight '>{data[0]?.data.data.role}</p>
@@ -89,7 +89,7 @@ const Profile = () => {
                         {/* //return div */}
                         {data[1].data.data.map((item: { title: string; id: string; image: string; author: { name: string; }; createdAt: string; }, i: number) => (
                             <div key={i} className='mb-4'>
-                                <Link to={`blogs/${item.id}`}><Card title={item.title} id={item.id} image={item.image} authorName={item.author.name} createdAt={item.createdAt} /> </Link>
+                                <Link to={`/blogs/${item.id}`}><Card title={item.title} id={item.id} image={item.image} authorName={item.author.name} createdAt={item.createdAt} /> </Link>
                                 <div >
 
                                     <div className='flex w-72 mt-1 justify-around'>

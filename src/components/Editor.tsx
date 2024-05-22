@@ -5,7 +5,7 @@ import List from '@editorjs/list'
 import LinkTool from '@editorjs/link'
 import RawTool from '@editorjs/raw'
 import ImageTool from '@editorjs/image'
-import { useGlobalContext } from '../context'
+import { useGlobalContext } from '../hooks/useGlobalContext'
 import axios from 'axios'
 
 const Editor = ({blockdata}:any) => {

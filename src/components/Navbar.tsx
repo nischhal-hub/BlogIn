@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { CiSearch } from "react-icons/ci";
 import { BiMessageRounded } from "react-icons/bi";
 import { MdNotificationsNone } from "react-icons/md";
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../hooks/useGlobalContext';
 
 
 const Navbar = () => {

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler, useForm} from "react-hook-form";
 import Editor from './Editor';
 import { postBlog } from '../api';
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../hooks/useGlobalContext';
 import { FormFields } from '../type';
 import { Link } from 'react-router-dom';
 //*icons
@@ -16,7 +16,7 @@ const AddBlog: FC = () => {
     const queryClient = useQueryClient();
     const { description } = useGlobalContext();
     const [file, setFile] = useState<string>("");
-    const { register, handleSubmit, formState: { errors }} = useForm<FormFields>();
+    const { register, handleSubmit, watch, formState: { errors }} = useForm<FormFields>();
     const createBlog = useMutation({
         mutationFn: (newBlog) => postBlog((newBlog)),
     })

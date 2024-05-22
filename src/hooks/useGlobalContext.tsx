@@ -1,9 +1,7 @@
 import { useMutationState } from '@tanstack/react-query';
 import React, { FC,ReactNode, createContext, useContext, useState } from 'react'
+import { childrenProp } from '../type';
 
-type childrenProp = {
-    children: ReactNode;
-}
 type AppContextType = {
     isSidebarOpen : boolean;
     setIsSidebarOpen : any;

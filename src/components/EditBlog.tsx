@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Editor from './Editor';
 import { editBlog } from '../api';
-import { useGlobalContext } from '../context';
+import { useGlobalContext } from '../hooks/useGlobalContext';
 import { Link, useParams } from 'react-router-dom';
 import { FormFields } from '../type';
 import extractFileName from '../utils/extractFIleName';
