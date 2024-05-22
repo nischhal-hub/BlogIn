@@ -1,34 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { LoginForm } from '../type'
 import icon from '../assets/Icon 2.png'
 import { useMutation } from '@tanstack/react-query'
 import { loginauth } from '../api/auth'
 import { useAuth } from '../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 
 const Login = () => {
     const value = useAuth();
+    const [isNotValidUser, setIsNotValidUser] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
-    const {mutate,isPending,isSuccess,isError} = useMutation({
-        mutationFn:(data:LoginForm)=>{return loginauth(data)}
+    const { mutate, isPending, isSuccess, isError } = useMutation({
+        mutationFn: (data: LoginForm) => { return loginauth(data) }
     })
 
     const onSubmit: SubmitHandler<LoginForm> = (loginData) => {
-        mutate(loginData,{
-            onSettled:(data)=>{
-                console.log("successfull:",data)
+        mutate(loginData, {
+            onSettled: (data) => {
+                if (data.response.status === 404) {
+                    setIsNotValidUser(true);
+                }
+                console.log("successfull:", data)
                 value?.login(data)
             }
         })
     }
-    
+
     if (isPending)
         return (
             <div className='flex justify-center items-center w-full h-screen'>
                 <h2 className='font-bold text-3xl text-textLight'>Logging in....</h2>
             </div>
         )
+    // if (isNotValidUser)
+    //     return (
+    //         <div className='flex justify-center items-center w-full h-screen'>
+    //             <h2 className='font-bold text-3xl text-textLight'>User not found.</h2>
+    //             <div className='flex mt-4'>
+    //                 <button className='m-3 bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'><Link to='/login'>Retry</Link></button>
+    //             </div>
+    //         </div>
+    //     )
     return (
         <>
             <div className='w-full h-screen flex items-center' >
@@ -60,7 +74,7 @@ const Login = () => {
 
                         <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Login</button>
                     </div>
-                    <p className='font-workSans font-light text-textLight text-sm text-center mb-6'>Don't have an account? <a href="#" className='text-accent underline'>Register</a></p>
+                    <p className='font-workSans font-light text-textLight text-sm text-center mb-6'>Don't have an account? <Link to='/register' className='text-accent underline'>Register</Link> </p>
                 </form>
             </div>
         </>

@@ -10,6 +10,7 @@ import EditBlog from './components/EditBlog'
 import Login from './components/Login'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './hooks/useAuth'
+import Register from './components/Register'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/' element={
             <ProtectedRoute>
               <SharedLayout />
