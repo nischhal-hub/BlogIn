@@ -1,8 +1,5 @@
 import { useState } from "react";
-interface StorageItem {
-    id:string;
-    name:string;
-}
+import { StorageItem } from "../type";
 
 export const useLocalStorage = (keyName:string, defaultValue:StorageItem |null) => {
     const [storedValue, setStoredValue] = useState(() => {

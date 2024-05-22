@@ -2,9 +2,12 @@ import React from 'react';
 import { sidebarLinks } from '../data/index';
 import { NavLink } from 'react-router-dom';
 import { useGlobalContext } from '../hooks/useGlobalContext';
+import { MdLogout } from "react-icons/md";
+import { useAuth } from '../hooks/useAuth';
 
 
 const Sidebar = () => {
+    const value = useAuth();
     const { isSidebarOpen } = useGlobalContext();
     return (
         <>
@@ -32,7 +35,7 @@ const Sidebar = () => {
                     <div className='personal-links font-urbanist'>
                         <ul className='m-6'>
                             {sidebarLinks[1].links.map((item, i) => (
-                                <li key={i} className=' text-textSecondary-200 cursor-pointer hover:text-accent transition first-of-type:pb-2 py-2 last-of-type:pt-2 last-of-type:pb-8'>
+                                <li key={i} className=' text-textSecondary-200 cursor-pointer hover:text-accent transition first-of-type:pb-2 py-2 '>
                                     <NavLink to={item.url} className={({ isActive }) =>
                                         [
                                             'flex',
@@ -45,6 +48,8 @@ const Sidebar = () => {
                                     </NavLink>
                                 </li>
                             ))}
+                            <li className=' text-textSecondary-200 cursor-pointer hover:text-accent transition pt-2 pb-8 flex' onClick={()=>value?.logout()}><span className='text-2xl'><MdLogout/></span>
+                                        <span className='text-base ml-4'>Logout</span></li>
                         </ul>
                     </div>
                 </div>

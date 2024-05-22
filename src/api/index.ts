@@ -58,13 +58,13 @@ export const postBlog = async (blogData: any) => {
     }
 }
 
-export const getProfile = async () => {
-    const urls = [`http://192.168.1.227:5000/api/user/get/c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d`,
+export const getProfile = async (id:string) => {
+    const urls = [`http://192.168.1.227:5000/api/user/get/${id}`,
         `http://192.168.1.227:5000/api/blog/get/my`
     ]
     const requests = urls.map(url => axios.get(url, {
         headers: {
-            'Authorization': `${authToken}`
+            'Authorization': `${id}`
         }
     }))
     try {

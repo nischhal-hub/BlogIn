@@ -2,11 +2,8 @@ import { Children, FC, createContext, useContext,useMemo, useState } from "react
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { childrenProp } from "../type";
+import { StorageItem } from "../type";
 
-interface StorageItem {
-    id:string;
-    name:string;
-}
 
 type AuthContextType = {
     user :StorageItem;
@@ -22,6 +19,7 @@ export const AuthProvider:FC<childrenProp> = ({children})=>{
     const navigate = useNavigate();
 
     const login = async(data:any): Promise<void> => { 
+        console.log(data)
         setUser(data);
         navigate('/profile');
     }

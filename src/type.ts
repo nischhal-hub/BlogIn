@@ -11,14 +11,19 @@ export type ItemProps = {
 export type FormFields = {
     title: string;
     overview: string;
-    image: File;
+    image: any;
 }
 
 export interface LoginForm  {
     email: string;
     password:string;
 }
-
+export interface StorageItem {
+    id:string;
+    name:string;
+    avatar:string;
+    role:string;
+}
 export type childrenProp = {
     children: ReactNode;
 }

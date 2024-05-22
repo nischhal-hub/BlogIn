@@ -44,7 +44,7 @@ export const sidebarLinks: SidebarLinks = [
             // {label:"Calendar",icon:<FaRegCalendarAlt/>,url:'/calendar' },
             // {label:"Settings",icon:<AiOutlineSetting/>,url:'/settings' },
             // {label:"Discord",icon:<FaDiscord/>,url:'/discord' },
-            {label:"Log out",icon:<MdLogout/>,url:'/logout' },
+            //{label:"Log out",icon:<MdLogout/>,url:'/logout' },
         ]
     }
 ]

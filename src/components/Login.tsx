@@ -23,6 +23,12 @@ const Login = () => {
         })
     }
     
+    if (isPending)
+        return (
+            <div className='flex justify-center items-center w-full h-screen'>
+                <h2 className='font-bold text-3xl text-textLight'>Logging in....</h2>
+            </div>
+        )
     return (
         <>
             <div className='w-full h-screen flex items-center' >
