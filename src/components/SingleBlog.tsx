@@ -67,19 +67,19 @@ function SingleBlog() {
               <p className='font-urbanist font-semibold text-2xl text-textLight'>About this Blog</p>
               <div className='flex w-[90%] font-workSans font-light text-md text-textLight mt-4'>
                 <div className='w-full mr-2'>
-                  {/* <p>{data.content}</p> */}
+                  
                   {blogContent.blocks.map((item: any) => {
                     if (item.type == 'paragraph')
                       return <p key={item.id} className='text-justify'>{item.data.text}</p>
                     else if(item.type == 'list')
                       return (
-                    <ul className='list-disc ml-5'>
+                    <ul key={item.id} className='list-disc ml-5'>
                       {item.data.items.map((list:any, i:any)=>(<li key={i}>{list}</li>))}
                     </ul>
                     );
                     else if (item.type == 'image')
                       return(
-                        <div className='w-full'>
+                        <div key={item.id} className='w-full'>
                           <img className='w-full' src={`http://192.168.1.227:5000/api/images/${extractFileName(item.data.file.url)}`} alt="image" />
                         </div>
                       )
@@ -104,7 +104,7 @@ function SingleBlog() {
                         </div>
                       )
                     else if(item.type == 'header')
-                      return<p className='text-xl font-bold font-urbanist my-2'>{item.data.text}</p>
+                      return<p key={item.id} className='text-xl font-bold font-urbanist my-2'>{item.data.text}</p>
                   })}
                 </div>
 
