@@ -42,13 +42,13 @@ export const fetchSingleBlog: any = async (id: string) => {
 }
 
 
-export const postBlog = async (blogData: any) => {
+export const postBlog = async (blogData: FormData,authId:string|undefined) => {
     const url = "http://192.168.1.227:5000/api/blog/create";
     console.log(blogData)
     try {
         const response = await axios.post(url, blogData, {
             headers: {
-                'Authorization': `${authToken}`
+                'Authorization': `${authId}`
             }
         });
 

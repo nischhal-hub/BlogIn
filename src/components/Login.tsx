@@ -19,9 +19,9 @@ const Login = () => {
     const onSubmit: SubmitHandler<LoginForm> = (loginData) => {
         mutate(loginData, {
             onSettled: (data) => {
-                if (data.response.status === 404) {
-                    setIsNotValidUser(true);
-                }
+                // if (data.response.status === 404) {
+                //     setIsNotValidUser(true);
+                // }
                 console.log("successfull:", data)
                 value?.login(data)
             }

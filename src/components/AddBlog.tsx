@@ -10,15 +10,21 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
-
+import { useAuth } from '../hooks/useAuth';
+interface PostData {
+    formData: FormData;
+    authId:string|undefined;
+}
 
 const AddBlog: FC = () => {
+    const value = useAuth();
+    const authId = value?.user.id;
     const queryClient = useQueryClient();
     const { description } = useGlobalContext();
     const [file, setFile] = useState<string>("");
     const { register, handleSubmit, watch, formState: { errors }} = useForm<FormFields>();
     const createBlog = useMutation({
-        mutationFn: (newBlog) => postBlog((newBlog)),
+        mutationFn: ({formData,authId}:PostData) => postBlog(formData,authId),
     })
 
 
@@ -28,7 +34,7 @@ const AddBlog: FC = () => {
         formData.append("overview", data.overview)
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image[0])
-        createBlog.mutate(formData,{
+        createBlog.mutate({formData,authId},{
             onSuccess:()=>{
                 queryClient.invalidateQueries({
                     queryKey:['blogs']

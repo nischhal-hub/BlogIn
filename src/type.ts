@@ -1,21 +1,21 @@
 import { ReactNode } from "react";
 
 export type ItemProps = {
-    id: string;
-    title: string;
-    image: string;
-    authorName: string;
-    createdAt: string;
+    id?: string;
+    title?: string;
+    image?: string;
+    authorName?: string;
+    createdAt?: string;
 }
 
 export type FormFields = {
-    title: string;
-    overview: string;
-    image: any;
+    title?: string;
+    overview?: string;
+    image?: any;
 }
 
 export interface LoginForm  {
-    email: string;
+    email?: string;
     password:string;
 }
 export interface RegisterForm {
@@ -33,13 +33,13 @@ export interface StorageItem {
     role:string;
 }
 export type childrenProp = {
-    children: ReactNode;
+    children?: ReactNode;
 }
 // type Block = {
-//     id: string;
-//     type: 'header' | 'paragraph' | 'list' | 'image' | '';
-//     data: {
-//         text: string;
-//         level?: number;
+//     id?: string;
+//     type?: 'header' | 'paragraph' | 'list' | 'image' | '';
+//     data?: {
+//         text?: string;
+//         level??: number;
 //     };
 // };
