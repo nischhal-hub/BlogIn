@@ -11,9 +11,16 @@ import extractFileName from '../utils/extractFIleName';
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
-
+import { useAuth } from '../hooks/useAuth';
+interface EditData {
+    formData:FormData;
+    id:string|undefined;
+    authId:string|undefined;
+}
 
 const EditBlog: FC = () => {
+    const value = useAuth();
+    const authId = value?.user.id;
     const queryClient = useQueryClient();
     const { description, isEditing, setIsEditing, editId, setEditId,blogs } = useGlobalContext();
     const { id } = useParams();
@@ -27,7 +34,7 @@ const EditBlog: FC = () => {
     const [story, setStory] = useState(JSON.parse(blogDesc.content))
 
     const updateBlog = useMutation({
-        mutationFn: ({ formData, id }) => editBlog(formData, id),
+        mutationFn: ({ formData, id,authId }:EditData) => editBlog(formData, id, authId),
     })
     
 
@@ -39,7 +46,7 @@ const EditBlog: FC = () => {
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image)
         console.log(formData)
-        updateBlog.mutate({formData,id}, {
+        updateBlog.mutate({formData,id,authId}, {
             onSuccess: () => {
                 setEditId("");
                 setIsEditing(false);

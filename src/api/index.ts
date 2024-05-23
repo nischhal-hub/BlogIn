@@ -44,6 +44,7 @@ export const fetchSingleBlog: any = async (id: string) => {
 
 export const postBlog = async (blogData: FormData,authId:string|undefined) => {
     const url = "http://192.168.1.227:5000/api/blog/create";
+    console.log(authId)
     console.log(blogData)
     try {
         const response = await axios.post(url, blogData, {
@@ -79,7 +80,7 @@ export const getProfile = async (id:string) => {
     }
 }
 
-export const deleteBlog = async (id: any) => {
+export const deleteBlog = async (id: string) => {
     try {
         const response = await axios.delete(`http://192.168.1.227:5000/api/blog/delete/${id}`, {
             headers: {
@@ -93,13 +94,13 @@ export const deleteBlog = async (id: any) => {
     }
 }
 
-export const editBlog = async (blogData:any,id:any) => {
+export const editBlog = async (blogData:FormData,id:string|undefined,authId:string|undefined) => {
     console.log(id)
     console.log(blogData)
     try {
         const response = await axios.patch(`http://192.168.1.227:5000/api/blog/update/${id}`, blogData, {
             headers: {
-                'Authorization': `${authToken}`
+                'Authorization': `${authId}`
             }
         })
         return response;

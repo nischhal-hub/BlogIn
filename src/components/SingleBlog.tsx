@@ -10,8 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchSingleBlog } from '../api';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { BiLogoKickstarter } from 'react-icons/bi';
-import { GiH2O } from 'react-icons/gi';
+import extractFileName from '../utils/extractFIleName';
 
 function SingleBlog() {
   const { id } = useParams();
@@ -20,14 +19,7 @@ function SingleBlog() {
     queryFn: () => fetchSingleBlog(id),
     queryKey: ['singleblog', id]
   })
-  function extractFileName(path:string) {
-    // Split the path by '\\' or '/'
-    var segments = path.split(/[\\"\/]/);
-    // Get the last segment, which should be the filename
-    var fileName = segments.pop();
-    return fileName;
-  }
-
+ 
   console.log(data)
   const settings = {
     dots: true,
@@ -65,9 +57,8 @@ function SingleBlog() {
                 <div className='mt-4 flex flex-col items-center'>
                   <p className='font-urbanist font-semibold text-3xl text-textLight text-center'>{data.title}</p>
                   <p className='font-workSans font-light text-md text-textLight text-center mx-4'>{data.overview}</p>
-                  <div className='w-64 flex justify-between mt-2'>
-                    <button className='border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'> <CiHeart className='mr-2 text-xl' /> Favorite</button>
-                    <button className='bg-accent rounded-3xl px-6 py-2 font-inter font-semibold text-sm text-textSecondary-100'>Buy Now</button>
+                  <div className='w-64 flex items-center justify-center mt-4'>
+                    <button className='border-[1px] border-solid border-textLight rounded-3xl px-4 py-2 font-inter font-semibold text-sm text-textLight flex items-center'> <CiHeart className='text-xl' /> Favorite</button>
                   </div>
                 </div>
               </div>
@@ -120,7 +111,7 @@ function SingleBlog() {
               </div>
             </div>
             <div>
-              <div className='buy-albums mt-6'>
+              <div className='buy-albums mt-8'>
                 <p className='font-urbanist font-semibold text-2xl text-textLight'>More from the artist</p>
                 <div className="slider-container mt-4">
                   <Slider {...settings}>
