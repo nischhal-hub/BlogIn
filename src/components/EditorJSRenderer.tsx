@@ -1,6 +1,5 @@
 import { cn } from '../utils'
 import extractFileName from '../utils/extractFIleName'
-import {blog} from '../testdata'
 
 export const EditorJSRenderer = ({ data }: string) => {
     const styles = {
@@ -50,7 +49,7 @@ export const EditorJSRenderer = ({ data }: string) => {
                     style: string;
                     items: string[];
                 }
-                const List = item.data.style === "ordered" ? "ul" : "li";
+                const List = item.data.style === "ordered" ? "ol" : "ul";
                 return <List key={item.id} className={styles.list}>
                     {list_data.items.map((item: string) => (
                         <li>{item}</li>
