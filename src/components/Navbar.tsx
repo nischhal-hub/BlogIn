@@ -22,11 +22,11 @@ const Navbar = () => {
                         <p className='text-textLight font-urbanist text-2xl font-semibold ml-3'>BlogIn</p>
                     </div>
                 </div>
-                <div className="profile-controls flex items-center justify-between w-[75%]">
-                    <div className="search relative font-workSans">
+                <div className="profile-controls flex items-center justify-end w-[75%]">
+                    {/* <div className="search relative font-workSans">
                         <CiSearch className='absolute top-3 text-2xl left-2 text-textSecondary-200' />
                         <input type="text" placeholder=' Search music, artist, events...' className='w-96 h-12 bg-searchInput font-light text-sm py-2 pl-8 rounded border-[1px] border-searchInputBorder text-textSecondary-200' />
-                    </div>
+                    </div> */}
                     <div className='flex items-center'>
                         <BiMessageRounded className='text-3xl text-textLight m-4 cursor-pointer' />
                         <MdNotificationsNone className='text-3xl text-textLight m-4 cursor-pointer' />
