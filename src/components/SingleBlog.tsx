@@ -38,7 +38,6 @@ function SingleBlog() {
     const blogContent = JSON.parse(data.content)
 
     console.log(blogContent)
-    console.log(data.content)
     return (
       <div className='flex w-full'>
         <div className='w-1/6'></div>
@@ -68,10 +67,11 @@ function SingleBlog() {
             </div>
             <div className="nft-details mt-8 pb-6 border-b-[2px] border-solid border-textSecondary-100 bord">
               <p className='font-urbanist font-semibold text-2xl text-textLight'>About this Blog</p>
-              <div className='flex w-[90%] font-workSans font-light text-md text-textLight mt-4'>
+              <div className='flex w-full font-workSans font-light text-md text-textLight mt-4'>
                 <div className='w-full mr-2'>
-                  {/* <EditorJSRenderer data={data.content}/> */}
-                  {blogContent.blocks.map((item: any) => {
+                  <EditorJSRenderer data={data.content}/>
+                  
+                  {/* {blogContent.blocks.map((item: any) => {
                     if (item.type == 'paragraph')
                       return <p key={item.id} className='text-justify'>{item.data.text}</p>
                     else if(item.type == 'list')
@@ -108,7 +108,7 @@ function SingleBlog() {
                       )
                     else if(item.type == 'header')
                       return<p key={item.id} className='text-xl font-bold font-urbanist my-2'>{item.data.text}</p>
-                  })}
+                  })} */}
                 </div>
 
               </div>
