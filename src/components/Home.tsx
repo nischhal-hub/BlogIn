@@ -15,7 +15,7 @@ const Home: FC = () => {
     }
     const handleSearch = () => {
         if(inputSearch == ""){
-            return null;
+            return
         }
         setIsSearching(true);
         const result = data?.data.filter((item: any) => item.title.toLowerCase().includes(inputSearch.toLowerCase()))
@@ -50,10 +50,11 @@ const Home: FC = () => {
                                     {isSearching && <FaTimes className='absolute top-3 text-2xl right-[75px] text-accent cursor-pointer' onClick={()=>{setIsSearching(false);setInputSearch('');}}/>}
                                     <input type="text" placeholder=' Search blogs...' value={inputSearch} onChange={handleChange} className='w-96 h-12 bg-searchInput font-light text-sm py-2 pl-8 rounded-tl rounded-bl border-[1px] border-searchInputBorder text-textSecondary-200' />
                                     <button className='bg-accent py-3 px-2 rounded-tr rounded-br' onClick={handleSearch}>Search</button>
-                                    {isSearching && <div className='w-96 bg-transparentGlass absolute -bottom-100 z-50 rounded-bl rounded-br'>
+                                    {isSearching && <div className='w-96 bg-transparentGlass absolute -bottom-100 z-50 rounded-bl rounded-br px-2'>
                                         {
                                             searchResult?.map((item: any) => (
-                                                <div className='w-full h-24 my-4 flex p-2'>
+                                                <Link to={`/blogs/${item.id}`}>
+                                                <div className='w-full h-24 my-4 flex p-2 bg-background rounded'>
                                                     <div className='w-[40%] h-full'>
                                                         <img className='w-full h-full' src={`http://192.168.1.227:5000/api/images/${extractFileName(item.image)}`} alt="photo" />
                                                     </div>
@@ -62,9 +63,13 @@ const Home: FC = () => {
                                                         <div className='h-8 overflow-hidden text-textLight'>
                                                             <p className='font-medium'>{item.overview}</p>
                                                         </div>
+                                                        <div className='flex'>
+
                                                         <p className='font-semibold text-textLight'>{item.author.name}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                </Link>
                                             ))
                                         }
                                     </div>}
