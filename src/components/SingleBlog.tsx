@@ -11,6 +11,7 @@ import { fetchSingleBlog } from '../api';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import extractFileName from '../utils/extractFIleName';
+import { EditorJSRenderer } from './EditorJSRenderer';
 
 function SingleBlog() {
   const { id } = useParams();
@@ -35,7 +36,9 @@ function SingleBlog() {
     </div>)
   else {
     const blogContent = JSON.parse(data.content)
+
     console.log(blogContent)
+    console.log(data.content)
     return (
       <div className='flex w-full'>
         <div className='w-1/6'></div>
@@ -67,7 +70,7 @@ function SingleBlog() {
               <p className='font-urbanist font-semibold text-2xl text-textLight'>About this Blog</p>
               <div className='flex w-[90%] font-workSans font-light text-md text-textLight mt-4'>
                 <div className='w-full mr-2'>
-                  
+                  {/* <EditorJSRenderer data={data.content}/> */}
                   {blogContent.blocks.map((item: any) => {
                     if (item.type == 'paragraph')
                       return <p key={item.id} className='text-justify'>{item.data.text}</p>
