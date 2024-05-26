@@ -32,6 +32,10 @@ export interface StorageItem {
     avatar:string;
     role:string;
 }
+export interface PostData {
+    formData: FormData;
+    authId:string|undefined;
+}
 export type childrenProp = {
     children?: ReactNode;
 }
