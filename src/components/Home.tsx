@@ -5,7 +5,7 @@ import Card from './Card';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBlog } from '../api';
 import { Link } from 'react-router-dom';
-import extractFileName from '../utils/extractFIleName';
+import imageURL from '../utils/imageURL';
 const Home: FC = () => {
     const [inputSearch, setInputSearch] = useState("");
     const [isSearching, setIsSearching] = useState(false)
@@ -56,7 +56,7 @@ const Home: FC = () => {
                                                 <Link to={`/blogs/${item.id}`}>
                                                 <div className='w-full h-24 my-4 flex p-2 bg-background rounded'>
                                                     <div className='w-[40%] h-full'>
-                                                        <img className='w-full h-full' src={`http://192.168.1.227:5000/api/images/${extractFileName(item.image)}`} alt="photo" />
+                                                        <img className='w-full h-full' src={imageURL(item.image)} alt="photo" />
                                                     </div>
                                                     <div className='w-[60%] ml-2 pr-2'>
                                                         <p className='whitespace-nowrap overflow-hidden text-ellipsis text-textLight font-semibold text-xl'>{item.title}</p>

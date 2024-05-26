@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { ItemProps } from '../type';
-import extractFileName from '../utils/extractFIleName';
+import imageURL from '../utils/imageURL';
 
 
 const Card: FC<ItemProps> = (prop) => {
@@ -11,11 +11,11 @@ const Card: FC<ItemProps> = (prop) => {
       </div>
       <div className='w-72 h-60 bg-transparentGlass rounded-[12px] overflow-hidden'>
 
-        <img className='w-full h-full' src={`http://192.168.1.227:5000/api/images/${extractFileName(prop.image)}`} alt="cover pic" />
+        <img className='w-full h-full' src={imageURL(prop?.image)} alt="cover pic" />
       </div>
       <div className="details mt-3 font-urbanist ">
         <p className='font-bold text-base text-textLight'>{prop.title}</p>
-        <p className='font-normal text-sm text-textSecondary-200'>{prop.createdAt.split("T")[0]}</p>
+        <p className='font-normal text-sm text-textSecondary-200'>{prop.createdAt?.split("T")[0]}</p>
       </div>
     </div>
 

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../hooks/useGlobalContext'
 import usePortal from 'react-useportal'
 import { useAuth } from '../hooks/useAuth'
-import extractFileName from '../utils/extractFIleName'
+import imageURL from '../utils/imageURL'
 
 const useModal = () => {
     const { isOpen, openPortal, togglePortal, closePortal, Portal, ref } = usePortal({
@@ -76,7 +76,7 @@ const Profile = () => {
                 <div className='w-full'>
                     <div className='w-full flex  items-center m-4'>
                         <div className='w-20 h-20 m-4 rounded-full overflow-hidden border-2 border-accent border-solid'>
-                            <img src={`http://192.168.1.227:5000/api/images/${extractFileName(data?.[0].data.data.avatar)}`} alt="user profile pic" className='w-full h-full' />
+                            <img src={imageURL(data?.[0].data.data.avatar)} alt="user profile pic" className='w-full h-full' />
                         </div>
                         <div className='w-3/6 my-2'>
                             <p className='font-urbanist font-semibold text-xl text-textLight '>{data?.[0]?.data.data.name}</p>

@@ -6,7 +6,7 @@ import { editBlog } from '../api';
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import { Link, useParams } from 'react-router-dom';
 import { FormFields } from '../type';
-import extractFileName from '../utils/extractFIleName';
+import imageURL from '../utils/imageURL';
 //*icons import
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
@@ -153,7 +153,7 @@ const EditBlog: FC = () => {
                                     <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button>
                                     <label htmlFor="file" className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2 cursor-pointer'>Upload</label>
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
-                                        <img src={`http://192.168.1.227:5000/api/images/${extractFileName(blogDesc.image)}`} className='object-contain' />
+                                        <img src={imageURL(blogDesc.image)} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
                                             <input type="file" id='file' {...register("image",{
                                                 onChange:(e)=>handleChange(e),

@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { cn } from '../utils'
-import extractFileName from '../utils/extractFIleName'
+import imageURL from '../utils/imageURL'
 import { FaArrowDown } from "react-icons/fa6";
 
 interface RendererProp {
@@ -148,7 +148,7 @@ export const EditorJSRenderer: FC<RendererProp> = ({ data }) => {
                                     "rounded-md",
                                 )
                             }>
-                                <img src={`http://192.168.1.227:5000/api/images/${extractFileName(image_data.file.url)}`} alt="image"
+                                <img src={imageURL(image_data.file.url)} alt="image"
                                     className={cn(
                                         'w-auto',
                                         'm-auto',

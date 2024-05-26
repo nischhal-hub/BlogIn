@@ -7,7 +7,7 @@ import { BiMessageRounded } from "react-icons/bi";
 import { MdNotificationsNone } from "react-icons/md";
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import { useAuth } from '../hooks/useAuth';
-import extractFileName from '../utils/extractFIleName';
+import imageURL from '../utils/imageURL';
 
 const Navbar = () => {
     const value = useAuth();
@@ -31,7 +31,7 @@ const Navbar = () => {
                         <BiMessageRounded className='text-3xl text-textLight m-4 cursor-pointer' />
                         <MdNotificationsNone className='text-3xl text-textLight m-4 cursor-pointer' />
                         <div className="profile-pic w-10 h-10 mx-4 ml-4 mr-2 pt-1 rounded-md overflow-hidden">
-                            <img src={`http://192.168.1.227:5000/api/images/${extractFileName(value?.user.avatar)}`} alt="profile picture" className='w-full h-full object-cover' />
+                            <img src={imageURL(value?.user.avatar)} alt="profile picture" className='w-full h-full object-cover' />
                         </div>
                         <p className='font-inter font-semibold text-textLight'>Hi, {value?.user.name}</p>
                     </div>
