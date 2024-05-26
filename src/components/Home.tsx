@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { cn } from '../utils';
 import { CiSearch } from "react-icons/ci";
 import { FaTimes } from "react-icons/fa";
 import Card from './Card';
@@ -6,10 +7,12 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchBlog } from '../api';
 import { Link } from 'react-router-dom';
 import imageURL from '../utils/imageURL';
+import { useGlobalContext } from '../hooks/useGlobalContext';
 const Home: FC = () => {
     const [inputSearch, setInputSearch] = useState("");
     const [isSearching, setIsSearching] = useState(false)
     const [searchResult, setSearchResult] = useState<any>();
+    const{isSidebarOpen} = useGlobalContext();
     const handleChange = (e: any) => {
         setInputSearch(e.target.value);
     }
@@ -39,7 +42,12 @@ const Home: FC = () => {
                 <div className='flex w-full h-auto'>
                     <div className='w-1/6'></div>
                     <div className='w-5/6'>
-                        <div className='w-[90%] ml-2 '>
+                    
+                        <div className={cn(
+                            "w-[90%]",
+                            "ml-2",
+                            
+                        )}>
                             <div className="filter-section flex flex-col-reverse md:flex-row lg:flex-row mt-10 items-center justify-between">
                                 <div className="dropdown font-urbanist flex my-4 justify-start">
                                     <button className='px-4 py-2 mr-2 border-[1px] text-textLight border-textLight rounded-[40px]'>All types</button>
