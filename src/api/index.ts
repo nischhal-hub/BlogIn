@@ -1,9 +1,8 @@
-import axios from "axios"
-//import authFetch from "../axios/custom"
+import authFetch from "../axios/custom"
 const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
 export const fetchBlog = async () => {
     try {
-        const resp = await axios('http://192.168.1.227:5000/api/blog/get-all')
+        const resp = await authFetch('/blog/get-all')
         console.log(resp.data)
         return resp.data
     }
@@ -16,7 +15,7 @@ export const fetchBlog = async () => {
 export const fetchSingleBlog: any = async (id: string) => {
     try {
         //console.log(id)
-        const resp = await axios(`http://192.168.1.227:5000/api/blog/get/${id}`)
+        const resp = await authFetch(`/blog/get/${id}`)
         console.log(resp.data)
         return resp.data.data
     }
@@ -28,9 +27,9 @@ export const fetchSingleBlog: any = async (id: string) => {
 
 
 export const postBlog = async (blogData: FormData,authId:string|undefined) => {
-    const url = "http://192.168.1.227:5000/api/blog/create";
+    const url = "/blog/create";
     try {
-        const response = await axios.post(url, blogData, {
+        const response = await authFetch.post(url, blogData, {
             headers: {
                 'Authorization': `${authId}`
             }
@@ -43,10 +42,10 @@ export const postBlog = async (blogData: FormData,authId:string|undefined) => {
 }
 
 export const getProfile = async (id:string) => {
-    const urls = [`http://192.168.1.227:5000/api/user/get/${id}`,
-        `http://192.168.1.227:5000/api/blog/get/my`
+    const urls = [`/user/get/${id}`,
+        `/blog/get/my`
     ]
-    const requests = urls.map(url => axios.get(url, {
+    const requests = urls.map(url => authFetch.get(url, {
         headers: {
             'Authorization': `${id}`
         }
@@ -65,7 +64,7 @@ export const getProfile = async (id:string) => {
 
 export const deleteBlog = async (id: string) => {
     try {
-        const response = await axios.delete(`http://192.168.1.227:5000/api/blog/delete/${id}`, {
+        const response = await authFetch.delete(`/blog/delete/${id}`, {
             headers: {
                 'Authorization': `${authToken}`
             },
@@ -81,7 +80,7 @@ export const editBlog = async (blogData:FormData,id:string|undefined,authId:stri
     console.log(id)
     console.log(blogData)
     try {
-        const response = await axios.patch(`http://192.168.1.227:5000/api/blog/update/${id}`, blogData, {
+        const response = await authFetch.patch(`/blog/update/${id}`, blogData, {
             headers: {
                 'Authorization': `${authId}`
             }
