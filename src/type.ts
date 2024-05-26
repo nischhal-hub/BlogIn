@@ -35,6 +35,13 @@ export interface StorageItem {
 export type childrenProp = {
     children?: ReactNode;
 }
+
+//*Login data type
+export type LoginData = {
+    email: string;
+    password: string;
+}
+
 // type Block = {
 //     id?: string;
 //     type?: 'header' | 'paragraph' | 'list' | 'image' | '';

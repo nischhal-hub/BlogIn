@@ -1,10 +1,6 @@
 import axios from "axios"
-import { RegisterForm } from "../../type";
+import { LoginData } from "../../type";
 
-type LoginData = {
-    email: string;
-    password: string;
-}
 export const loginauth = async (data: LoginData) => {
     const loginData = JSON.stringify(data)
     console.log(loginData)
