@@ -143,7 +143,6 @@ const AddBlog: FC = () => {
 
                                         </div>
                                     </div>
-                                    {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
                                 </div>
                             </div>
                             <div className="event details mt-6">
@@ -155,7 +154,6 @@ const AddBlog: FC = () => {
                                 </div>
                             </div>
                             <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Submit</button>
-                            {/* <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>{isEditing ? `Edit` : `Submit`}</button> */}
                         </form>
                     </div>
 
