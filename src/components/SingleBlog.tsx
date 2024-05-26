@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaRegCirclePlay } from "react-icons/fa6";
+//import { FaRegCirclePlay } from "react-icons/fa6";
 import { IoIosArrowBack } from 'react-icons/io';
 import { CiHeart } from "react-icons/ci";
 import BuyAlbum from './BuyAlbum';

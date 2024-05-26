@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import { FaTimes } from "react-icons/fa";
 import Card from './Card';

@@ -13,6 +13,8 @@ const Sidebar = () => {
         <>
             <div className='h-40 w-1/6 bg-accent rounded-full absolute blur-3xl opacity-20 bottom-10 -left-10'></div>
             {isSidebarOpen && (
+                <>
+                <div className='w-full h-full z-30 absolute bg-transparentGlass lg:invisible'></div>
                 <div className='sidebar absolute left-0 w-52 z-50 h-auto bg-gradient-to-t from-sidebarBackground2 to-sidebarBackground'>
                     <div className='page-urls font-urbanist'>
                         <ul className='mx-6 border-b-[1px] border-searchInputBorder'>
@@ -53,6 +55,7 @@ const Sidebar = () => {
                         </ul>
                     </div>
                 </div>
+                </>
             )}
 
         </>

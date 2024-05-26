@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import logo from '../assets/Icon 2.png'
 import { footerURLs, socialURLs } from '../data'
 
