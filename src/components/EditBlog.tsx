@@ -13,32 +13,32 @@ import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { useAuth } from '../hooks/useAuth';
 interface EditData {
-    formData:FormData;
-    id:string|undefined;
-    authId:string|undefined;
+    formData: FormData;
+    id: string | undefined;
+    authId: string | undefined;
 }
 
 const EditBlog: FC = () => {
     const value = useAuth();
     const authId = value?.user.id;
     const queryClient = useQueryClient();
-    const { description, isEditing, setIsEditing, editId, setEditId,blogs } = useGlobalContext();
+    const { description, isEditing, setIsEditing, editId, setEditId, blogs } = useGlobalContext();
     const { id } = useParams();
     const [file, setFile] = useState("");
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
     const [formImage, setFormImage] = useState<any>();
-    
+
     //*list the item to be edited in the page.
-    const blogDesc = blogs[1].data.data.find((item:any)=>item.id === id);
-    
-    
+    const blogDesc = blogs[1].data.data.find((item: any) => item.id === id);
+
+
     //*below hook is for the initialization of content of editorjs
     const [story, setStory] = useState(JSON.parse(blogDesc.content))
 
     const updateBlog = useMutation({
-        mutationFn: ({ formData, id,authId }:EditData) => editBlog(formData, id, authId),
+        mutationFn: ({ formData, id, authId }: EditData) => editBlog(formData, id, authId),
     })
-    
+
 
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         console.log(data.title)
@@ -46,24 +46,24 @@ const EditBlog: FC = () => {
         if (data.title !== undefined) {
             formData.append("title", data.title);
         } else {
-            formData.append("title", ""); 
+            formData.append("title", "");
         }
-    
+
         if (data.overview !== undefined) {
             formData.append("overview", data.overview);
         } else {
             formData.append("overview", "");
         }
-    
+
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image)
         console.log(formData)
-        updateBlog.mutate({formData,id,authId}, {
+        updateBlog.mutate({ formData, id, authId }, {
             onSuccess: () => {
                 setEditId("");
                 setIsEditing(false);
                 queryClient.invalidateQueries({
-                    queryKey:['blogs']
+                    queryKey: ['blogs']
                 })
             }
         })
@@ -87,7 +87,7 @@ const EditBlog: FC = () => {
             setFormImage(imageURL(blogDesc.image));
         }
 
-    }, [isEditing,editId,id])
+    }, [isEditing, editId, id])
 
     if (updateBlog.isPending)
         return (
@@ -112,7 +112,7 @@ const EditBlog: FC = () => {
             <div className='flex justify-center items-center w-full h-screen'>
                 <h2 className='font-bold text-3xl text-textLight'>Error updating blog.</h2>
             </div>)
-    return(
+    return (
         <div className='flex w-full'>
             <div className='w-1/6'></div>
             <div className='w-5/6'>
@@ -169,12 +169,16 @@ const EditBlog: FC = () => {
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
                                         <img src={formImage} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
-                                            <input type="file" id='file' {...register("image",{
-                                                onChange:(e)=>handleChange(e),
+                                            <input type="file" id='file' {...register("image", {
+                                                onChange: (e) => handleChange(e),
                                             })} />
                                         </div>
                                     </div>
-                                    {errors.image  && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
+                                    {errors.image?.message &&
+                                        <span className='text-sm text-error font-workSans mt-2 z-60'>
+                                            {typeof errors.image.message === 'string' ? errors.image.message : 'An error occurred'}
+                                        </span>
+                                    }
                                 </div>
                             </div>
                             <div className="event details mt-6">
@@ -182,7 +186,7 @@ const EditBlog: FC = () => {
 
                                 <div className='flex flex-col w-full'>
                                     <p className='font-workSans font-normal text-xs text-textSecondary-100 my-1'>Description</p>
-                                    <Editor blockdata={story}/>
+                                    <Editor blockdata={story} />
                                 </div>
                             </div>
                             <button className='px-4 py-2 bg-accent rounded-3xl font-workSans mt-4'>Edit</button>

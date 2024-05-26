@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { SubmitHandler, useForm} from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Editor from './Editor';
 import { Link } from 'react-router-dom';
 //*type
@@ -24,9 +24,9 @@ const AddBlog: FC = () => {
     const queryClient = useQueryClient();
     const { description } = useGlobalContext();
     const [file, setFile] = useState<string>("");
-    const { register, handleSubmit, formState: { errors }} = useForm<FormFields>();
+    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
     const createBlog = useMutation({
-        mutationFn: ({formData,authId}:PostData) => postBlog(formData,authId),
+        mutationFn: ({ formData, authId }: PostData) => postBlog(formData, authId),
     })
 
 
@@ -36,10 +36,10 @@ const AddBlog: FC = () => {
         formData.append("overview", data.overview)
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image[0])
-        createBlog.mutate({formData,authId},{
-            onSuccess:()=>{
+        createBlog.mutate({ formData, authId }, {
+            onSuccess: () => {
                 queryClient.invalidateQueries({
-                    queryKey:['blogs']
+                    queryKey: ['blogs']
                 })
             }
         })
@@ -135,11 +135,15 @@ const AddBlog: FC = () => {
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
                                         <img src={file} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
-                                            <input type="file" id='file' {...register("image",{
-                                                required:"Upload an image.",
-                                                onChange:(e)=>handleChange(e)
+                                            <input type="file" id='file' {...register("image", {
+                                                required: "Upload an image.",
+                                                onChange: (e) => handleChange(e)
                                             })} />
-                                        {errors.image && <span className='text-sm text-error font-workSans mt-2'>{errors.image.message}</span>}
+                                            {errors.image?.message &&
+                                                <span className='text-sm text-error font-workSans mt-2 z-60'>
+                                                    {typeof errors.image.message === 'string' ? errors.image.message : 'An error occurred'}
+                                                </span>
+                                            }
 
                                         </div>
                                     </div>
