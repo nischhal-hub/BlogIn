@@ -41,7 +41,7 @@ export const postBlog = async (blogData: FormData,authId:string|undefined) => {
     }
 }
 
-export const getProfile = async (id:string) => {
+export const getProfile = async (id:string|undefined) => {
     const urls = [`/user/get/${id}`,
         `/blog/get/my`
     ]

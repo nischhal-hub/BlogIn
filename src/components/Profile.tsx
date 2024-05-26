@@ -40,7 +40,7 @@ const Profile = () => {
     const queryClient = useQueryClient();
     const { setEditId, setIsEditing, setBlogs } = useGlobalContext();
     const { openModal, closeModal, isOpen, Modal, ref } = useModal()
-    const [deleteId, setDeleteId] = useState();
+    const [deleteId, setDeleteId] = useState<string|undefined>(undefined);
     const { data, isLoading } = useQuery({
         queryFn: () => getProfile(value?.user.id),
         queryKey: ['profile']
@@ -50,7 +50,7 @@ const Profile = () => {
     }, [data])
 
     const removeBlog = useMutation({
-        mutationFn: (id) => deleteBlog(id)
+        mutationFn: (id:string|undefined) => deleteBlog(id)
     })
 
     const handleEdit = (id: string) => {
