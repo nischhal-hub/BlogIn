@@ -62,7 +62,7 @@ export const getProfile = async (id:string|undefined) => {
     }
 }
 
-export const deleteBlog = async (id: string) => {
+export const deleteBlog = async (id: string|undefined) => {
     try {
         const response = await authFetch.delete(`/blog/delete/${id}`, {
             headers: {
