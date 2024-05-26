@@ -1,21 +1,6 @@
 import axios from "axios"
-
 //import authFetch from "../axios/custom"
-// type PostData = {
-//     title: string;
-//     overview: string;
-//     content: string;
-//     image:File;
-// }
-
-// const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
-
-type EditBlog = {
-    blogData: FormData;
-    id: string;
-}
 const authToken = "c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d";
-//const {editId} = useGlobalContext()
 export const fetchBlog = async () => {
     try {
         const resp = await axios('http://192.168.1.227:5000/api/blog/get-all')
@@ -44,8 +29,6 @@ export const fetchSingleBlog: any = async (id: string) => {
 
 export const postBlog = async (blogData: FormData,authId:string|undefined) => {
     const url = "http://192.168.1.227:5000/api/blog/create";
-    console.log(authId)
-    console.log(blogData)
     try {
         const response = await axios.post(url, blogData, {
             headers: {
