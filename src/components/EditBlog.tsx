@@ -26,10 +26,12 @@ const EditBlog: FC = () => {
     const { id } = useParams();
     const [file, setFile] = useState("");
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
+    const [formImage, setFormImage] = useState<any>();
     
     //*list the item to be edited in the page.
     const blogDesc = blogs[1].data.data.find((item:any)=>item.id === id);
-
+    
+    
     //*below hook is for the initialization of content of editorjs
     const [story, setStory] = useState(JSON.parse(blogDesc.content))
 
@@ -41,8 +43,18 @@ const EditBlog: FC = () => {
     const onSubmit: SubmitHandler<FormFields> = (data) => {
         console.log(data.title)
         const formData = new FormData();
-        formData.append("title", data.title)
-        formData.append("overview", data.overview)
+        if (data.title !== undefined) {
+            formData.append("title", data.title);
+        } else {
+            formData.append("title", ""); 
+        }
+    
+        if (data.overview !== undefined) {
+            formData.append("overview", data.overview);
+        } else {
+            formData.append("overview", "");
+        }
+    
         formData.append("content", JSON.stringify(description))
         formData.append("image", data.image)
         console.log(formData)
@@ -63,6 +75,7 @@ const EditBlog: FC = () => {
         console.log(selectedFile)
         if (selectedFile) {
             setFile(URL.createObjectURL(selectedFile));
+            setFormImage(URL.createObjectURL(selectedFile));
         }
     }
     useEffect(() => {
@@ -71,6 +84,7 @@ const EditBlog: FC = () => {
             setValue("title", blogDesc.title);
             setValue("image", blogDesc.image);
             setValue("overview", blogDesc.overview);
+            setFormImage(imageURL(blogDesc.image));
         }
 
     }, [isEditing,editId,id])
@@ -153,14 +167,14 @@ const EditBlog: FC = () => {
                                     <button className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2'>Upload</button>
                                     <label htmlFor="file" className='bg-accent absolute top-7 right-4 font-workSans font-normal text-base rounded-[50px] px-2 cursor-pointer'>Upload</label>
                                     <div className='w-full h-52 mt-4 bg-formInput rounded-md overflow-hidden flex items-center justify-center'>
-                                        <img src={imageURL(blogDesc.image)} className='object-contain' />
+                                        <img src={formImage} className='object-contain' />
                                         <div className='w-[0.1px] opacity-0 overflow-hidden'>
                                             <input type="file" id='file' {...register("image",{
                                                 onChange:(e)=>handleChange(e),
                                             })} />
                                         </div>
                                     </div>
-                                    {errors.image && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
+                                    {errors.image  && <span className='text-sm text-error font-workSans mt-2 z-60'>{errors.image.message}</span>}
                                 </div>
                             </div>
                             <div className="event details mt-6">
