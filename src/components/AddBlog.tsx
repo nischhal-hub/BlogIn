@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Editor from './Editor';
 import { Link } from 'react-router-dom';
 //*type
-import { FormFields } from '../type';
+import { TFormFields } from '../type';
 //*api
 import { postBlog } from '../api';
 //*hooks
@@ -15,7 +15,10 @@ import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 
-import { PostData } from '../type';
+interface IPostData {
+    formData: FormData;
+    authId:string|undefined;
+}
 
 
 const AddBlog: FC = () => {
@@ -24,13 +27,13 @@ const AddBlog: FC = () => {
     const queryClient = useQueryClient();
     const { description } = useGlobalContext();
     const [file, setFile] = useState<string>("");
-    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
+    const { register, handleSubmit, formState: { errors } } = useForm<TFormFields>();
     const createBlog = useMutation({
-        mutationFn: ({ formData, authId }: PostData) => postBlog(formData, authId),
+        mutationFn: ({ formData, authId }: IPostData) => postBlog(formData, authId),
     })
 
 
-    const onSubmit: SubmitHandler<FormFields> = (data) => {
+    const onSubmit: SubmitHandler<TFormFields> = (data) => {
         const formData = new FormData();
         formData.append("title", data.title)
         formData.append("overview", data.overview)

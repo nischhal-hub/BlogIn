@@ -1,6 +1,6 @@
 import { useMutationState } from '@tanstack/react-query';
 import React, { FC,ReactNode, createContext, useContext, useState } from 'react'
-import { childrenProp } from '../type';
+import { TchildrenProp } from '../type';
 
 type AppContextType = {
     isSidebarOpen : boolean;
@@ -16,7 +16,7 @@ type AppContextType = {
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
-const AppProvider: FC<childrenProp> = ({children}) => {
+const AppProvider: FC<TchildrenProp> = ({children}) => {
     // const data = {
     //     "time": new Date().getTime(),
     //     "blocks": [

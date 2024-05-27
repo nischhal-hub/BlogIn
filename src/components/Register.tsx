@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
 import icon from '../assets/Icon 2.png'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { RegisterForm } from '../type';
 import { BiSolidImageAdd } from "react-icons/bi";
 import { useMutation } from '@tanstack/react-query';
 import { registerUser } from '../api/auth';
 import { Link } from 'react-router-dom';
 
+interface IRegisterForm {
+    name:string;
+    email:string;
+    password:string;
+    phoneNumber:string;
+    role:string;
+    avatar:any;
+}
 
 const Register = () => {
     const [file, setFile] = useState<string>("");
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>();
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegisterForm>();
     const { mutate, isPending, isSuccess } = useMutation({
         mutationFn: (userData: FormData) => registerUser(userData)
     })
@@ -22,7 +29,7 @@ const Register = () => {
             setFile(URL.createObjectURL(selectedFile));
         }
     }
-    const onSubmit: SubmitHandler<RegisterForm> = (data) => {
+    const onSubmit: SubmitHandler<IRegisterForm> = (data) => {
         console.log(data)
         const registerData = new FormData();
         registerData.append("name", data.name)

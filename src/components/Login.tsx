@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { LoginForm } from '../type'
 import icon from '../assets/Icon 2.png'
 import { useMutation } from '@tanstack/react-query'
 import { loginauth } from '../api/auth'
 import { useAuth } from '../hooks/useAuth'
 import { Link } from 'react-router-dom'
-
+import { ILoginForm } from '../type'
 
 const Login = () => {
     const value = useAuth();
-    const [isNotValidUser, setIsNotValidUser] = useState(false)
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
-    const { mutate, isPending, isSuccess, isError } = useMutation({
-        mutationFn: (data: LoginForm) => { return loginauth(data) }
+    const { register, handleSubmit, formState: { errors } } = useForm<ILoginForm>()
+    const { mutate, isPending } = useMutation({
+        mutationFn: (data: ILoginForm) => loginauth(data),
     })
 
-    const onSubmit: SubmitHandler<LoginForm> = (loginData) => {
+    const onSubmit: SubmitHandler<ILoginForm> = (loginData) => {
         mutate(loginData, {
             onSettled: (data) => {
                 // if (data.response.status === 404) {

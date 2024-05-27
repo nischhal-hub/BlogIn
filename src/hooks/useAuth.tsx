@@ -1,19 +1,19 @@
 import { Children, FC, createContext, useContext,useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { childrenProp } from "../type";
-import { StorageItem } from "../type";
+import { TchildrenProp } from "../type";
+import { IStorageItem } from "../type";
 
 
 type AuthContextType = {
-    user :StorageItem;
+    user :IStorageItem;
     login :(data:any) => Promise<void>;
     logout : ()=>void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider:FC<childrenProp> = ({children})=>{
+export const AuthProvider:FC<TchildrenProp> = ({children})=>{
 
     const [user, setUser] = useLocalStorage("user", null);
     const navigate = useNavigate();

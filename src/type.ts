@@ -1,44 +1,28 @@
 import { ReactNode } from "react";
 
 
-export type FormFields = {
+export type TFormFields = {
     title?: string;
     overview?: string;
     image?: any;
 }
 
-export interface LoginForm  {
+export interface ILoginForm  {
     email?: string;
     password:string;
 }
-export interface RegisterForm {
-    name:string;
-    email:string;
-    password:string;
-    phoneNumber:string;
-    role:string;
-    avatar:any;
-}
-export interface StorageItem {
+
+export interface IStorageItem {
     id:string;
     name:string;
     avatar:string;
     role:string;
 }
 
-export interface PostData {
-    formData: FormData;
-    authId:string|undefined;
-}
-export type childrenProp = {
+export type TchildrenProp = {
     children?: ReactNode;
 }
 
-//*Login data type
-export type LoginData = {
-    email: string;
-    password: string;
-}
 
 // type Block = {
 //     id?: string;

@@ -5,14 +5,14 @@ import Editor from './Editor';
 import { editBlog } from '../api';
 import { useGlobalContext } from '../hooks/useGlobalContext';
 import { Link, useParams } from 'react-router-dom';
-import { FormFields } from '../type';
+import { TFormFields } from '../type';
 import imageURL from '../utils/imageURL';
 //*icons import
 import { IoIosArrowBack } from 'react-icons/io'
 import { MdVerified } from "react-icons/md";
 import { BiSolidImageAdd } from "react-icons/bi";
 import { useAuth } from '../hooks/useAuth';
-interface EditData {
+interface IEditData {
     formData: FormData;
     id: string | undefined;
     authId: string | undefined;
@@ -25,7 +25,7 @@ const EditBlog: FC = () => {
     const { description, isEditing, setIsEditing, editId, setEditId, blogs } = useGlobalContext();
     const { id } = useParams();
     const [file, setFile] = useState("");
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormFields>();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm<TFormFields>();
     const [formImage, setFormImage] = useState<any>();
 
     //*list the item to be edited in the page.
@@ -36,11 +36,11 @@ const EditBlog: FC = () => {
     const [story, setStory] = useState(JSON.parse(blogDesc.content))
 
     const updateBlog = useMutation({
-        mutationFn: ({ formData, id, authId }: EditData) => editBlog(formData, id, authId),
+        mutationFn: ({ formData, id, authId }: IEditData) => editBlog(formData, id, authId),
     })
 
 
-    const onSubmit: SubmitHandler<FormFields> = (data) => {
+    const onSubmit: SubmitHandler<TFormFields> = (data) => {
         console.log(data.title)
         const formData = new FormData();
         if (data.title !== undefined) {

@@ -1,7 +1,8 @@
 import axios from "axios"
-import { LoginData } from "../../type";
+import authFetch from "../../axios/custom"
+import { ILoginForm } from "../../type"
 
-export const loginauth = async (data: LoginData) => {
+export const loginauth = async (data: ILoginForm) => {
     const loginData = JSON.stringify(data)
     console.log(loginData)
     try {
@@ -22,7 +23,7 @@ export const loginauth = async (data: LoginData) => {
 export const registerUser = async(data:FormData)=>{
     const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
     try {
-        const resp = await axios.post('http://192.168.1.227:5000/api/register', data, {
+        const resp = await authFetch.post('http://192.168.1.227:5000/api/register', data, {
             headers: {
                 'Authorization':`${authToken}`
             }

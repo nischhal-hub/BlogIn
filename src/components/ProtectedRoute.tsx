@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import {useAuth} from '../hooks/useAuth'
 import { Navigate } from 'react-router-dom';
-import { childrenProp } from '../type';
+import { TchildrenProp } from '../type';
 
-const ProtectedRoute:FC<childrenProp> = ({ children }) => {
+const ProtectedRoute:FC<TchildrenProp> = ({ children }) => {
     const value = useAuth();
 
     if(!value?.user.id){

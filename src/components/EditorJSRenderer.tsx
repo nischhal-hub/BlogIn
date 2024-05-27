@@ -3,16 +3,16 @@ import { cn } from '../utils'
 import imageURL from '../utils/imageURL'
 import { FaArrowDown } from "react-icons/fa6";
 
-interface RendererProp {
+interface IRendererProp {
     data: string
 }
-interface Styles {
+interface IStyles {
     header: Record<string, string>;
     paragraph: string;
     list: Record<"ol" | "ul", string>;
 }
 
-export const EditorJSRenderer: FC<RendererProp> = ({ data }) => {
+export const EditorJSRenderer: FC<IRendererProp> = ({ data }) => {
     const [showReadMore, setShowReadMore] = useState(false);
     const [showMore, setShowMore] = useState(false);
 
@@ -36,7 +36,7 @@ export const EditorJSRenderer: FC<RendererProp> = ({ data }) => {
 
     }
 
-    const dataBlocks = useCallback((styles: Styles, data: string) => {
+    const dataBlocks = useCallback((styles: IStyles, data: string) => {
         try {
             const parsedContent = JSON.parse(data) as {
                 time: number;
