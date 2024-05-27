@@ -1,12 +1,5 @@
 import { ReactNode } from "react";
 
-export type ItemProps = {
-    id?: string;
-    title?: string;
-    image?: string;
-    authorName?: string;
-    createdAt?: string;
-}
 
 export type FormFields = {
     title?: string;
@@ -32,6 +25,7 @@ export interface StorageItem {
     avatar:string;
     role:string;
 }
+
 export interface PostData {
     formData: FormData;
     authId:string|undefined;

@@ -1,9 +1,15 @@
 import { FC } from 'react'
-import { ItemProps } from '../type';
 import imageURL from '../utils/imageURL';
 
+type TCardProps = {
+  id?: string;
+  title?: string;
+  image?: string;
+  authorName?: string;
+  createdAt?: string;
+}
 
-const Card: FC<ItemProps> = (prop) => {
+const Card: FC<TCardProps> = (prop) => {
   return (
     <div className='w-72 relative rounded-[12px] mb-2'>
       <div className="price absolute top-3 right-4">
