@@ -21,13 +21,8 @@ export const loginauth = async (data: ILoginForm) => {
 }
 
 export const registerUser = async(data:FormData)=>{
-    const authToken = 'c05a13fc-2e9a-4dbb-b31e-a34f7b7afe5d';
     try {
-        const resp = await authFetch.post('http://192.168.1.227:5000/api/register', data, {
-            headers: {
-                'Authorization':`${authToken}`
-            }
-        })
+        const resp = await authFetch.post('/register', data)
         console.log(resp.data.data)
         return resp.data.data;
     } catch (err) {
